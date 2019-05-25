@@ -1,0 +1,39 @@
+{
+  "name": "saylua",
+  "version": "0.0.1",
+  "contributors": [
+    "The Saylua Team"
+  ],
+  "repository": "saylua/saylua",
+  "scripts": {
+    "start": "polymer serve",
+    "build": "polymer build --auto-base-path && gulp prpl-server",
+    "build:static": "polymer build",
+    "serve": "prpl-server --root server/build",
+    "serve:static": "polymer serve --port 5000 build/es5-bundled",
+    "test": ""
+  },
+  "dependencies": {
+    "@polymer/app-layout": "^3.0.0",
+    "@polymer/polymer": "^3.1.0",
+    "@webcomponents/webcomponentsjs": "^2.2.4",
+    "lit-element": "^2.0.1",
+    "pwa-helpers": "^0.9.0",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0"
+  },
+  "devDependencies": {
+    "axe-core": "^3.0.0",
+    "del": "^3.0.0",
+    "gulp": "^4.0.0",
+    "gulp-rename": "^1.3.0",
+    "gulp-replace": "^1.0.0",
+    "mocha": "^5.2.0",
+    "pixelmatch": "^4.0.2",
+    "polymer-cli": "^1.9.3",
+    "polyserve": "^0.27.0",
+    "prpl-server": "^1.4.0",
+    "puppeteer": "^1.5.0"
+  }
+}
