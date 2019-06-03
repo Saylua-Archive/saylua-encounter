@@ -16,7 +16,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../store.js';
 
 // These are the actions needed by this element.
-import { increment, decrement } from '../actions/counter.js';
+import { increment, decrement } from '../reducers/counter.js';
 
 // We are lazy loading its reducer.
 import counter from '../reducers/counter.js';

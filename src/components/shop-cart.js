@@ -19,7 +19,7 @@ import { removeFromCartIcon } from './my-icons.js';
 import './shop-item.js';
 
 // These are the actions needed by this element.
-import { removeFromCart } from '../actions/shop.js';
+import { removeFromCart } from '../reducers/shop.js';
 
 // These are the reducers needed by this element.
 import { cartItemsSelector, cartTotalSelector } from '../reducers/shop.js';

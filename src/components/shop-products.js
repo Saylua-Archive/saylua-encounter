@@ -18,7 +18,7 @@ import { store } from '../store.js';
 import './shop-item.js';
 
 // These are the actions needed by this element.
-import { getAllProducts, addToCart } from '../actions/shop.js';
+import { getAllProducts, addToCart } from '../reducers/shop.js';
 
 // These are the elements needed by this element.
 import { addToCartIcon } from './my-icons.js';

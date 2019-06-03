@@ -16,7 +16,7 @@ import { connect } from 'pwa-helpers/connect-mixin.js';
 import { store } from '../store.js';
 
 // These are the actions needed by this element.
-import { checkout } from '../actions/shop.js';
+import { checkout } from '../reducers/shop.js';
 
 // We are lazy loading its reducer.
 import shop, { cartQuantitySelector } from '../reducers/shop.js';
