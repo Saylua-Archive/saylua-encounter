@@ -72,20 +72,41 @@ class SlDungeon extends LitElement {
   connectedCallback() {
     super.connectedCallback();
 
+    // Everything starts off as a wall.
     this.tileMap = [...Array(MAP_TILE_HEIGHT)].map(() => {
-      return [...Array(MAP_TILE_WIDTH)].map(() => (Math.random() > 0.5 ? 1 : 0));
+      return [...Array(MAP_TILE_WIDTH)].map(() => true);
     });
 
-    const row = Math.floor(MAP_TILE_HEIGHT / 2);
-    const col = Math.floor(MAP_TILE_WIDTH / 2);
+    const startRow = Math.floor(MAP_TILE_HEIGHT / 2);
+    const startCol = Math.floor(MAP_TILE_WIDTH / 2);
 
-    this.tileMap[row][col] = 0;
+    this._depthFirstSearchGeneration(new Map(), this.tileMap, startRow, startCol, true);
 
-    this.r = row;
-    this.c = col;
+    this.r = startRow;
+    this.c = startCol;
 
     this._boundMoveCharacter = this.moveCharacter.bind(this);
     window.addEventListener('keydown', this._boundMoveCharacter);
+  }
+
+  _depthFirstSearchGeneration(visited, map, row, col, isStart) {
+    // Tile not within map coordinates. 
+    if (!this.isValidTile(map, row, col)) return;
+
+    const visitKey = `${row}-${col}`;
+    // Tile is already walkable.
+    if (visited.has(visitKey)) return;
+
+    visited.set(visitKey, true);
+
+    if (isStart || Math.random() > 0.3) {
+      map[row][col] = false;
+
+      this._depthFirstSearchGeneration(visited, map, row + 1, col);
+      this._depthFirstSearchGeneration(visited, map, row - 1, col);
+      this._depthFirstSearchGeneration(visited, map, row, col + 1);
+      this._depthFirstSearchGeneration(visited, map, row, col - 1);
+    }
   }
 
   disconnectedCallback() {
@@ -114,7 +135,7 @@ class SlDungeon extends LitElement {
   set r(r) {
     const c = this._col;
 
-    if (this.isValidTile(r, c)) {
+    if (this.isWalkableTile(this.tileMap, r, c)) {
       this._row = r;
     }
   }
@@ -126,7 +147,7 @@ class SlDungeon extends LitElement {
   set c(c) {
     const r = this._row;
 
-    if (this.isValidTile(r, c)) {
+    if (this.isWalkableTile(this.tileMap, r, c)) {
       this._col = c;
     }
   }
@@ -135,12 +156,17 @@ class SlDungeon extends LitElement {
     return this._col;
   }
 
-  isValidTile(r, c) {
-    if (!this.tileMap || !this.tileMap.length || !this.tileMap[0].length) return false;
-    if (r >= this.tileMap.length || r < 0) return false;
-    if (c >= this.tileMap[0].length || c < 0) return false;
-    
-    return !this.tileMap[r][c];
+  isWalkableTile(map, r, c) {
+    if (!this.isValidTile(map, r, c)) return false;
+    return !map[r][c];
+  }
+
+  isValidTile(map, r, c) {
+    if (!map || !map.length || !map[0].length) return false;
+    if (r >= map.length || r < 0) return false;
+    if (c >= map[0].length || c < 0) return false;
+
+    return true;
   }
 }
 
