@@ -7,8 +7,8 @@ class SlDungeon extends LitElement {
   static get properties() {
     return {
       tileMap: Array,
-      r: Number,
-      c: Number,
+      _row: Number,
+      _col: Number,
     };
   }
 
@@ -76,10 +76,71 @@ class SlDungeon extends LitElement {
       return [...Array(MAP_TILE_WIDTH)].map(() => (Math.random() > 0.5 ? 1 : 0));
     });
 
-    this.r = Math.floor(MAP_TILE_HEIGHT / 2);
-    this.c = Math.floor(MAP_TILE_WIDTH / 2);
+    const row = Math.floor(MAP_TILE_HEIGHT / 2);
+    const col = Math.floor(MAP_TILE_WIDTH / 2);
 
-    this.tileMap[this.r][this.c] = 0;
+    this.tileMap[row][col] = 0;
+
+    this.r = row;
+    this.c = col;
+
+    this._boundMoveCharacter = this.moveCharacter.bind(this);
+    window.addEventListener('keydown', this._boundMoveCharacter);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+
+    window.removeEventListener(this._boundMoveCharacter);
+  }
+
+  moveCharacter(e) {
+    switch (e.key) {
+      case 'ArrowLeft':
+        this.c -= 1;
+        break;
+      case 'ArrowRight':
+        this.c += 1;
+        break;
+      case 'ArrowUp':
+        this.r -= 1;
+        break;
+      case 'ArrowDown':
+        this.r += 1;
+        break;
+    }
+  }
+
+  set r(r) {
+    const c = this._col;
+
+    if (this.isValidTile(r, c)) {
+      this._row = r;
+    }
+  }
+
+  get r() {
+    return this._row;
+  }
+
+  set c(c) {
+    const r = this._row;
+
+    if (this.isValidTile(r, c)) {
+      this._col = c;
+    }
+  }
+
+  get c() {
+    return this._col;
+  }
+
+  isValidTile(r, c) {
+    if (!this.tileMap || !this.tileMap.length || !this.tileMap[0].length) return false;
+    if (r >= this.tileMap.length || r < 0) return false;
+    if (c >= this.tileMap[0].length || c < 0) return false;
+    
+    return !this.tileMap[r][c];
   }
 }
 
