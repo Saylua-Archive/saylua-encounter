@@ -6,7 +6,8 @@ const MAP_TILE_HEIGHT = 10;
 class SlDungeon extends LitElement {
   static get properties() {
     return {
-      tileMap: Array,
+      tileGrid: Array,
+      objectMap: Object,
       _row: Number,
       _col: Number,
     };
@@ -53,7 +54,7 @@ class SlDungeon extends LitElement {
 
   render() {
     return html`
-      ${this.tileMap.map((row, r) => html`
+      ${this.tileGrid.map((row, r) => html`
         <div class="row">
           ${row.map((cell, c) => html`
             <div class="cell" ?isWall=${cell}>
@@ -61,7 +62,7 @@ class SlDungeon extends LitElement {
                 <sl-dungeon-entity type="sprite">
                   <img src="/images/sprites/chirling/saylian.png" />
                 </sl-dungeon-entity>
-              `: ''}
+              `: this._renderCellEntities(r, c)}
             </div>
           `)}
         </div>
@@ -69,44 +70,43 @@ class SlDungeon extends LitElement {
     `;
   }
 
-  connectedCallback() {
-    super.connectedCallback();
+  _renderCellEntities(r, c) {
+    const key = gridKey(r, c);
+    if (!this.objectMap.has(key)) return '';
+  
+    const objects = this.objectMap.get(key);
+
+    return html`
+      <sl-dungeon-entity type="sprite">
+        <img src="/images/sprites/vela/saylian.png" />
+      </sl-dungeon-entity>`;
+  }
+
+  constructor() {
+    super();
+
+    this.objectMap = new Map();
 
     // Everything starts off as a wall.
-    this.tileMap = [...Array(MAP_TILE_HEIGHT)].map(() => {
+    this.tileGrid = [...Array(MAP_TILE_HEIGHT)].map(() => {
       return [...Array(MAP_TILE_WIDTH)].map(() => true);
     });
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
 
     const startRow = Math.floor(MAP_TILE_HEIGHT / 2);
     const startCol = Math.floor(MAP_TILE_WIDTH / 2);
 
-    this._depthFirstSearchGeneration(new Map(), this.tileMap, startRow, startCol, true);
+    depthFirstSearchGeneration(this.objectMap, new Map(), this.tileGrid, startRow, 
+      startCol, true);
 
     this.r = startRow;
     this.c = startCol;
 
     this._boundMoveCharacter = this.moveCharacter.bind(this);
     window.addEventListener('keydown', this._boundMoveCharacter);
-  }
-
-  _depthFirstSearchGeneration(visited, map, row, col, isStart) {
-    // Tile not within map coordinates. 
-    if (!this.isValidTile(map, row, col)) return;
-
-    const visitKey = `${row}-${col}`;
-    // Tile is already walkable.
-    if (visited.has(visitKey)) return;
-
-    visited.set(visitKey, true);
-
-    if (isStart || Math.random() > 0.3) {
-      map[row][col] = false;
-
-      this._depthFirstSearchGeneration(visited, map, row + 1, col);
-      this._depthFirstSearchGeneration(visited, map, row - 1, col);
-      this._depthFirstSearchGeneration(visited, map, row, col + 1);
-      this._depthFirstSearchGeneration(visited, map, row, col - 1);
-    }
   }
 
   disconnectedCallback() {
@@ -135,7 +135,7 @@ class SlDungeon extends LitElement {
   set r(r) {
     const c = this._col;
 
-    if (this.isWalkableTile(this.tileMap, r, c)) {
+    if (isWalkableTile(this.tileGrid, r, c)) {
       this._row = r;
     }
   }
@@ -147,7 +147,7 @@ class SlDungeon extends LitElement {
   set c(c) {
     const r = this._row;
 
-    if (this.isWalkableTile(this.tileMap, r, c)) {
+    if (isWalkableTile(this.tileGrid, r, c)) {
       this._col = c;
     }
   }
@@ -155,19 +155,47 @@ class SlDungeon extends LitElement {
   get c() {
     return this._col;
   }
+}
 
-  isWalkableTile(map, r, c) {
-    if (!this.isValidTile(map, r, c)) return false;
-    return !map[r][c];
+function depthFirstSearchGeneration(objectMap, visited, grid, row, col, isStart) {
+  // Tile not within grid coordinates. 
+  if (!isValidTile(grid, row, col)) return;
+
+  const visitKey = gridKey(row, col);
+  // Tile is already walkable.
+  if (visited.has(visitKey)) return;
+
+  visited.set(visitKey, true);
+
+  if (isStart || Math.random() > 0.3) {
+    grid[row][col] = false;
+
+    if (Math.random() < 0.05) {
+      objectMap.set(visitKey, {'type': 'sprite'});
+    }
+
+    depthFirstSearchGeneration(objectMap, visited, grid, row + 1, col);
+    depthFirstSearchGeneration(objectMap, visited, grid, row - 1, col);
+    depthFirstSearchGeneration(objectMap, visited, grid, row, col + 1);
+    depthFirstSearchGeneration(objectMap, visited, grid, row, col - 1);
   }
+}
 
-  isValidTile(map, r, c) {
-    if (!map || !map.length || !map[0].length) return false;
-    if (r >= map.length || r < 0) return false;
-    if (c >= map[0].length || c < 0) return false;
+function gridKey(row, col) {
+  return `${row}-${col}`;
+}
 
-    return true;
-  }
+function isWalkableTile(grid, r, c) {
+  if (!isValidTile(grid, r, c)) return false;
+  return !grid[r][c];
+}
+
+function isValidTile(grid, r, c) {
+  if (!grid || !grid.length || !grid[0].length) return false;
+  if (r >= grid.length || r < 0) return false;
+  if (c >= grid[0].length || c < 0) return false;
+
+  return true;
 }
 
 window.customElements.define('sl-dungeon', SlDungeon);
