@@ -1,15 +1,17 @@
 import { LitElement, html, css } from 'lit-element';
 
-const MAP_TILE_WIDTH = 20;
-const MAP_TILE_HEIGHT = 10;
+const MAP_TILE_WIDTH = 30;
+const MAP_TILE_HEIGHT = 30;
 
 class SlDungeon extends LitElement {
   static get properties() {
     return {
-      tileGrid: Array,
-      objectMap: Object,
-      _row: Number,
-      _col: Number,
+      tileGrid: {type: Array},
+      objectMap: {type: Object},
+      viewWidth: {type: Number},
+      viewHeight: {type: Number},
+      _row: {type: Number},
+      _col: {type: Number},
     };
   }
 
@@ -17,6 +19,7 @@ class SlDungeon extends LitElement {
     return [
       css`
         :host {
+          postion: relative;
           max-width: 100%;
           max-height: 100%;
           overflow: hidden;
@@ -53,16 +56,19 @@ class SlDungeon extends LitElement {
   }
 
   render() {
+    const rOrigin = this.rOrigin;
+    const cOrigin = this.cOrigin;
+
     return html`
-      ${this.tileGrid.map((row, r) => html`
+      ${this.renderedTiles.map((row, r) => html`
         <div class="row">
           ${row.map((cell, c) => html`
-            <div class="cell" ?isWall=${cell}>
-              ${this.r === r && this.c === c ? html`
+            <div class="cell" ?isWall=${cell.isWall}>
+              ${this.r === rOrigin + r && this.c === cOrigin + c ? html`
                 <sl-dungeon-entity type="sprite">
                   <img src="/images/sprites/chirling/saylian.png" />
                 </sl-dungeon-entity>
-              `: this._renderCellEntities(r, c)}
+              `: this._renderCellEntities(rOrigin + r, cOrigin + c)}
             </div>
           `)}
         </div>
@@ -74,12 +80,17 @@ class SlDungeon extends LitElement {
     const key = gridKey(r, c);
     if (!this.objectMap.has(key)) return '';
   
-    const objects = this.objectMap.get(key);
+    const object = this.objectMap.get(key);
 
-    return html`
-      <sl-dungeon-entity type="sprite">
-        <img src="/images/sprites/vela/saylian.png" />
-      </sl-dungeon-entity>`;
+    switch (object.type) {
+      case 'sprite':
+        return html`
+          <sl-dungeon-entity type="sprite">
+            <img src="/images/sprites/vela/saylian.png" />
+          </sl-dungeon-entity>`;
+      default:
+        return '';
+    }
   }
 
   constructor() {
@@ -89,8 +100,11 @@ class SlDungeon extends LitElement {
 
     // Everything starts off as a wall.
     this.tileGrid = [...Array(MAP_TILE_HEIGHT)].map(() => {
-      return [...Array(MAP_TILE_WIDTH)].map(() => true);
+      return [...Array(MAP_TILE_WIDTH)].map(() => ({isWall: true}));
     });
+
+    this.viewWidth = 15;
+    this.viewHeight = 9;
   }
 
   connectedCallback() {
@@ -102,8 +116,8 @@ class SlDungeon extends LitElement {
     depthFirstSearchGeneration(this.objectMap, new Map(), this.tileGrid, startRow, 
       startCol, true);
 
-    this.r = startRow;
-    this.c = startCol;
+    this._row = startRow;
+    this._col = startCol;
 
     this._boundMoveCharacter = this.moveCharacter.bind(this);
     window.addEventListener('keydown', this._boundMoveCharacter);
@@ -117,19 +131,51 @@ class SlDungeon extends LitElement {
 
   moveCharacter(e) {
     switch (e.key) {
+      case 'a':
       case 'ArrowLeft':
         this.c -= 1;
+        e.preventDefault();
         break;
+      case 'd':
       case 'ArrowRight':
         this.c += 1;
+        e.preventDefault();
         break;
+      case 'w':
       case 'ArrowUp':
         this.r -= 1;
+        e.preventDefault();
         break;
+      case 's':
       case 'ArrowDown':
         this.r += 1;
+        e.preventDefault();
         break;
     }
+  }
+
+  get rOrigin() {
+    return this.r - Math.floor(this.viewHeight / 2);
+  }
+
+  get cOrigin() {
+    return this.c - Math.floor(this.viewWidth / 2);
+  }
+
+  get renderedTiles() {
+    const rOrigin = this.rOrigin;
+    const cOrigin = this.cOrigin;
+  
+    return [...Array(this.viewHeight)].map((_, i) => {
+      const r = rOrigin + i;
+      return [...Array(this.viewWidth)].map((_, j) => {
+        const c = cOrigin + j;
+
+        if (!isValidTile(this.tileGrid, r, c)) return {isWall: true};
+
+        return this.tileGrid[r][c];
+      });
+    });
   }
 
   set r(r) {
@@ -168,10 +214,10 @@ function depthFirstSearchGeneration(objectMap, visited, grid, row, col, isStart)
   visited.set(visitKey, true);
 
   if (isStart || Math.random() > 0.3) {
-    grid[row][col] = false;
+    grid[row][col].isWall = false;
 
-    if (Math.random() < 0.05) {
-      objectMap.set(visitKey, {'type': 'sprite'});
+    if (!isStart && Math.random() < 0.05) {
+      objectMap.set(visitKey, {type: 'sprite'});
     }
 
     depthFirstSearchGeneration(objectMap, visited, grid, row + 1, col);
@@ -187,7 +233,7 @@ function gridKey(row, col) {
 
 function isWalkableTile(grid, r, c) {
   if (!isValidTile(grid, r, c)) return false;
-  return !grid[r][c];
+  return grid[r][c] && !grid[r][c].isWall;
 }
 
 function isValidTile(grid, r, c) {
