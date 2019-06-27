@@ -1,11 +1,10 @@
-import { html } from 'lit-element';
-import { PageViewElement } from './page-view-element.js';
+import { LitElement, html } from 'lit-element';
 import './dungeon/sl-dungeon.js';
 
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
-class SlHome extends PageViewElement {
+class SlHome extends LitElement {
   static get styles() {
     return [
       SharedStyles
