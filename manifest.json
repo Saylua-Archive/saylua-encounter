@@ -1,7 +1,7 @@
 {
   "name": "Saylua",
   "short_name": "Saylua",
-  "description": "Fantasy virtual pets on a tidally locked planet",
+  "description": "Fantasy pets on a tidally locked planet",
   "start_url": "/",
   "display": "minimal-ui",
   "theme_color": "#13c3a9",
