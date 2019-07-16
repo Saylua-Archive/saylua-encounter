@@ -4,6 +4,10 @@ import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
 
+import './sl-home.js';
+import './dungeon/sl-dungeon.js';
+import './sl-view404.js';
+
 // This element is connected to the Redux store.
 import { store } from '../store.js';
 
@@ -20,7 +24,6 @@ class SlApp extends connect(store)(LitElement) {
     return {
       appTitle: { type: String },
       _page: { type: String },
-      _drawerOpened: { type: Boolean },
       _snackbarOpened: { type: Boolean },
       _offline: { type: Boolean }
     };
@@ -29,15 +32,59 @@ class SlApp extends connect(store)(LitElement) {
   static get styles() {
     return [
       css`
+        :host {
+          --sl-header-height: 42px;
+          display: block;
+          min-width: 100%;
+          min-height: 100%;
+          display: grid;
+          grid-template-areas:
+            'header header'
+            'sidebar main';
+          grid-template-rows: var(--sl-header-height) 1fr;
+          grid-template-columns: 256px 1fr;
+        }
+        aside {
+          display: block;
+          position: fixed;
+          grid-area: sidebar;
+          width: 256px;
+          top: var(--sl-header-height);
+          margin-bottom: -var(--sl-header-height);
+          z-index: 10;
+          background: #d6e0df;
+          height: 100%;
+        }
+        header {
+          display: block;
+          position: fixed;
+          width: 100%;
+          grid-area: header;
+          height: var(--sl-header-height);
+          background: white;
+          box-sizing: border-box;
+          z-index: 50;
+        }
+        main {
+          box-sizing: border-box;
+          padding: 0px;
+          grid-area: main;
+        }
       `
     ];
   }
 
   render() {
     return html`
-      <a href="/home">The Caves</a>
-      <a href="/view2">View 2</a>
-      <a href="/view3">View 3</a>
+      <header>
+        <a href="/home">Home Sweet Home</a>
+        <a href="/cave">The Caves</a>
+        <a href="/view3">View 3</a>
+      </header>
+
+      <aside>
+        you are an amazing spritekeeper
+      </aside>
 
       <main role="main">
         ${this._renderPage(this._page)}
@@ -53,8 +100,8 @@ class SlApp extends connect(store)(LitElement) {
     switch (page) {
       case 'home':
         return html`<sl-home></sl-home>`;
-      case 'view2':
-        return html`view 2`;
+      case 'cave':
+        return html`<sl-dungeon></sl-dungeon>`;
       case 'view3':
         return html`view 3`;
       default:

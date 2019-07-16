@@ -9,25 +9,6 @@ export const navigate = (path) => (dispatch) => {
 
   // Any other info you might want to extract from the path (like page type),
   // you can do here
-  dispatch(loadPage(page));
-};
-
-const loadPage = (page) => (dispatch) => {
-  switch(page) {
-    case 'home':
-      import('../components/sl-home.js');
-      break;
-    case 'view2':
-      import('../components/my-view2.js');
-      break;
-    case 'view3':
-      import('../components/my-view3.js');
-      break;
-    default:
-      page = 'view404';
-      import('../components/sl-view404.js');
-  }
-
   dispatch(updatePage(page));
 };
 

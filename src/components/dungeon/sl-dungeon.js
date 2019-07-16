@@ -126,7 +126,7 @@ class SlDungeon extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
 
-    window.removeEventListener(this._boundMoveCharacter);
+    window.removeEventListener('keydown', this._boundMoveCharacter);
   }
 
   moveCharacter(e) {
