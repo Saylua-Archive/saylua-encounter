@@ -1,0 +1,16 @@
+[
+  {
+    "text": "This is a test encounter."
+  },
+  {
+    "text": "This is another test encounter."
+  },
+  {
+    "text": "This one has a custom choice button.",
+    "choices": [
+      {
+        "text": "Cool!"
+      }
+    ]
+  }
+]
