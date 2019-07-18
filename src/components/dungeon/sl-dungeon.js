@@ -79,7 +79,7 @@ class SlDungeon extends LitElement {
   _renderCellEntities(r, c) {
     const key = gridKey(r, c);
     if (!this.objectMap.has(key)) return '';
-  
+
     const object = this.objectMap.get(key);
 
     switch (object.type) {
@@ -113,7 +113,7 @@ class SlDungeon extends LitElement {
     const startRow = Math.floor(MAP_TILE_HEIGHT / 2);
     const startCol = Math.floor(MAP_TILE_WIDTH / 2);
 
-    depthFirstSearchGeneration(this.objectMap, new Map(), this.tileGrid, startRow, 
+    depthFirstSearchGeneration(this.objectMap, new Map(), this.tileGrid, startRow,
       startCol, true);
 
     this._row = startRow;
@@ -165,7 +165,7 @@ class SlDungeon extends LitElement {
   get renderedTiles() {
     const rOrigin = this.rOrigin;
     const cOrigin = this.cOrigin;
-  
+
     return [...Array(this.viewHeight)].map((_, i) => {
       const r = rOrigin + i;
       return [...Array(this.viewWidth)].map((_, j) => {
@@ -204,7 +204,7 @@ class SlDungeon extends LitElement {
 }
 
 function depthFirstSearchGeneration(objectMap, visited, grid, row, col, isStart) {
-  // Tile not within grid coordinates. 
+  // Tile not within grid coordinates.
   if (!isValidTile(grid, row, col)) return;
 
   const visitKey = gridKey(row, col);

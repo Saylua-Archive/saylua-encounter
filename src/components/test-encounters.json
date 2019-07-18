@@ -12,5 +12,19 @@
         "text": "Cool!"
       }
     ]
+  },
+  {
+    "text": "Some encounters may have more than one choice.",
+    "choices": [
+      {
+        "text": "Like this!"
+      },
+      {
+        "text": "Or this!"
+      },
+      {
+        "text": "Or even, this!"
+      }
+    ]
   }
 ]
