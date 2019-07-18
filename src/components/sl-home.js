@@ -17,7 +17,7 @@ class SlHome extends LitElement {
     this.currentEncounter = 0;
   }
 
-  handleClick(e) {
+  continue(e) {
     this.currentEncounter = (this.currentEncounter + 1) % testEncounters.length;
   }
 
@@ -31,7 +31,7 @@ class SlHome extends LitElement {
     const encounter = testEncounters[this.currentEncounter];
     return html`
       ${encounter.text}
-      <button @click="${this.handleClick}">
+      <button @click=${this.continue}>
         ${encounter.choices && encounter.choices[0].text || "Continue..."}
       </button>
     `;
