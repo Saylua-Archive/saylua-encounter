@@ -3,7 +3,24 @@ import { LitElement, html } from 'lit-element';
 // These are the shared styles needed by this element.
 import { SharedStyles } from './shared-styles.js';
 
+import testEncounters from './test-encounters.json';
+
 class SlHome extends LitElement {
+  static get properties() {
+    return {
+      currentEncounter: { type: Number },
+    };
+  }
+
+  constructor() {
+    super();
+    this.currentEncounter = 0;
+  }
+
+  continue(e) {
+    this.currentEncounter = (this.currentEncounter + 1) % testEncounters.length;
+  }
+
   static get styles() {
     return [
       SharedStyles
@@ -11,24 +28,12 @@ class SlHome extends LitElement {
   }
 
   render() {
+    const encounter = testEncounters[this.currentEncounter];
     return html`
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices, tortor vitae euismod pretium, nibh arcu varius arcu, non feugiat justo elit quis turpis. Cras nisi sapien, vulputate et rhoncus id, vulputate et orci. Curabitur tincidunt quam eu magna malesuada, in facilisis metus semper. Phasellus erat justo, ullamcorper vel sem vitae, euismod tincidunt mauris. Etiam egestas, sem non viverra porttitor, nisi quam sagittis nunc, non scelerisque nisl turpis eu ligula. Curabitur accumsan purus libero, ac semper turpis auctor a. Nunc faucibus porta nisl vitae tincidunt. Suspendisse non feugiat tellus, et varius nunc. Curabitur nisi augue, aliquam sit amet faucibus vel, eleifend sit amet ipsum.
-
-    Nulla consequat sem dolor, vitae iaculis risus vestibulum non. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse commodo non risus eu fermentum. Nullam efficitur vel lectus ac blandit. Phasellus volutpat, urna quis egestas malesuada, magna eros cursus nisi, et viverra quam arcu in lacus. Suspendisse mattis vestibulum placerat. Sed eleifend tincidunt sem, vel lobortis dolor dignissim eu. Fusce vehicula magna tortor, at bibendum ligula interdum luctus. Proin commodo pellentesque elementum. Morbi imperdiet et risus eu mollis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris porta erat lorem, sit amet gravida lorem rutrum ut. Etiam neque nunc, condimentum sed aliquam eu, consectetur iaculis lacus. Suspendisse vulputate lobortis ligula, nec faucibus dui venenatis et. Fusce aliquet nisi ut porttitor sodales.
-    
-    Pellentesque blandit mollis feugiat. Mauris aliquet convallis turpis, at dapibus ex interdum non. Curabitur auctor pellentesque massa, sit amet blandit mauris luctus sed. In iaculis eget lorem in vulputate. Cras dictum varius risus at elementum. Integer condimentum nibh ut libero fermentum, sed rutrum mauris congue. Donec imperdiet sed mi at tincidunt. Curabitur blandit semper quam vitae fringilla. Maecenas eget tincidunt purus, nec fermentum tellus.
-    
-    Fusce aliquam libero ut aliquet vehicula. Donec a ex tincidunt, maximus ligula eget, placerat magna. In vitae ex neque. Curabitur sit amet sollicitudin augue, eget tincidunt enim. Phasellus vulputate massa id porttitor scelerisque. Integer semper dolor sit amet mauris viverra blandit. Nulla a felis porttitor, faucibus metus vitae, ullamcorper velit. Duis placerat, mauris a maximus facilisis, nibh felis vulputate elit, vel scelerisque augue metus a nunc. Duis efficitur, mi nec aliquam hendrerit, nisl nisi commodo mi, eget hendrerit nibh ante eu nisi. Ut luctus ac nisi sit amet elementum.
-    
-    Duis pellentesque nibh a ante rhoncus imperdiet. Sed eleifend, eros in egestas sodales, nibh mi molestie lectus, nec sollicitudin mauris ipsum a tortor. Sed pellentesque accumsan velit, ac auctor orci laoreet id. Proin non lacinia massa. Pellentesque eget nibh fermentum, auctor quam vitae, fringilla odio. Curabitur egestas consequat mauris, a auctor augue vehicula at. Vestibulum quis justo pharetra, maximus dolor et, convallis ante. Donec accumsan nisi lectus, at semper dui dictum at. Donec nunc elit, vestibulum sed convallis at, gravida id leo. Vivamus sed eleifend magna. Sed pulvinar, enim ut rutrum tincidunt, nunc felis semper lacus, id laoreet felis ante quis magna. Vestibulum id nulla in orci congue luctus id nec odio. Quisque vehicula tempus mauris, non fringilla ipsum finibus a.Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse ultrices, tortor vitae euismod pretium, nibh arcu varius arcu, non feugiat justo elit quis turpis. Cras nisi sapien, vulputate et rhoncus id, vulputate et orci. Curabitur tincidunt quam eu magna malesuada, in facilisis metus semper. Phasellus erat justo, ullamcorper vel sem vitae, euismod tincidunt mauris. Etiam egestas, sem non viverra porttitor, nisi quam sagittis nunc, non scelerisque nisl turpis eu ligula. Curabitur accumsan purus libero, ac semper turpis auctor a. Nunc faucibus porta nisl vitae tincidunt. Suspendisse non feugiat tellus, et varius nunc. Curabitur nisi augue, aliquam sit amet faucibus vel, eleifend sit amet ipsum.
-
-    Nulla consequat sem dolor, vitae iaculis risus vestibulum non. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Suspendisse commodo non risus eu fermentum. Nullam efficitur vel lectus ac blandit. Phasellus volutpat, urna quis egestas malesuada, magna eros cursus nisi, et viverra quam arcu in lacus. Suspendisse mattis vestibulum placerat. Sed eleifend tincidunt sem, vel lobortis dolor dignissim eu. Fusce vehicula magna tortor, at bibendum ligula interdum luctus. Proin commodo pellentesque elementum. Morbi imperdiet et risus eu mollis. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris porta erat lorem, sit amet gravida lorem rutrum ut. Etiam neque nunc, condimentum sed aliquam eu, consectetur iaculis lacus. Suspendisse vulputate lobortis ligula, nec faucibus dui venenatis et. Fusce aliquet nisi ut porttitor sodales.
-
-    Pellentesque blandit mollis feugiat. Mauris aliquet convallis turpis, at dapibus ex interdum non. Curabitur auctor pellentesque massa, sit amet blandit mauris luctus sed. In iaculis eget lorem in vulputate. Cras dictum varius risus at elementum. Integer condimentum nibh ut libero fermentum, sed rutrum mauris congue. Donec imperdiet sed mi at tincidunt. Curabitur blandit semper quam vitae fringilla. Maecenas eget tincidunt purus, nec fermentum tellus.
-
-    Fusce aliquam libero ut aliquet vehicula. Donec a ex tincidunt, maximus ligula eget, placerat magna. In vitae ex neque. Curabitur sit amet sollicitudin augue, eget tincidunt enim. Phasellus vulputate massa id porttitor scelerisque. Integer semper dolor sit amet mauris viverra blandit. Nulla a felis porttitor, faucibus metus vitae, ullamcorper velit. Duis placerat, mauris a maximus facilisis, nibh felis vulputate elit, vel scelerisque augue metus a nunc. Duis efficitur, mi nec aliquam hendrerit, nisl nisi commodo mi, eget hendrerit nibh ante eu nisi. Ut luctus ac nisi sit amet elementum.
-
-    Duis pellentesque nibh a ante rhoncus imperdiet. Sed eleifend, eros in egestas sodales, nibh mi molestie lectus, nec sollicitudin mauris ipsum a tortor. Sed pellentesque accumsan velit, ac auctor orci laoreet id. Proin non lacinia massa. Pellentesque eget nibh fermentum, auctor quam vitae, fringilla odio. Curabitur egestas consequat mauris, a auctor augue vehicula at. Vestibulum quis justo pharetra, maximus dolor et, convallis ante. Donec accumsan nisi lectus, at semper dui dictum at. Donec nunc elit, vestibulum sed convallis at, gravida id leo. Vivamus sed eleifend magna. Sed pulvinar, enim ut rutrum tincidunt, nunc felis semper lacus, id laoreet felis ante quis magna. Vestibulum id nulla in orci congue luctus id nec odio. Quisque vehicula tempus mauris, non fringilla ipsum finibus a.
+      ${encounter.text}
+      <button @click=${this.continue}>
+        ${encounter.choices && encounter.choices[0].text || "Continue..."}
+      </button>
     `;
   }
 }
