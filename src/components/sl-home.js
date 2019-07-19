@@ -5,6 +5,8 @@ import { SharedStyles } from './shared-styles.js';
 
 import testEncounters from './test-encounters.json';
 
+const defaultContinueText = "Continue...";
+
 class SlHome extends LitElement {
   static get properties() {
     return {
@@ -29,11 +31,16 @@ class SlHome extends LitElement {
 
   render() {
     const encounter = testEncounters[this.currentEncounter];
+
+    const choiceButtons = (encounter.choices && encounter.choices.map(choice => html`
+      <button @click=${this.continue}>
+        ${choice.text || defaultContinueText}
+      </button>
+    `)) || html`<button @click=${this.continue}>${defaultContinueText}</button>`;
+
     return html`
       ${encounter.text}
-      <button @click=${this.continue}>
-        ${encounter.choices && encounter.choices[0].text || "Continue..."}
-      </button>
+      ${choiceButtons}
     `;
   }
 }

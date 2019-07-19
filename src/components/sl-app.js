@@ -106,7 +106,7 @@ class SlApp extends connect(store)(LitElement) {
         return html`view 3`;
       default:
         return html`<sl-view404></sl-view404>`;
-    } 
+    }
   }
 
   firstUpdated() {

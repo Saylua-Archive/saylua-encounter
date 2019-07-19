@@ -22,6 +22,8 @@
   "devDependencies": {
     "axe-core": "^3.0.0",
     "del": "^3.0.0",
+    "eslint": "^6.0.1",
+    "eslint-plugin-lit": "^1.1.1",
     "mocha": "^5.2.0",
     "pixelmatch": "^4.0.2",
     "puppeteer": "^1.5.0",
