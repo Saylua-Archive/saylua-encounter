@@ -1,2 +1,0 @@
-This is to test GitHub-Jira integration.
-This change will be committed using the "[SAYL-61] integration test" smart commit.
