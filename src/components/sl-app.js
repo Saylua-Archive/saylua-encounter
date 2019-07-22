@@ -4,7 +4,7 @@ import { installOfflineWatcher } from 'pwa-helpers/network.js';
 import { installRouter } from 'pwa-helpers/router.js';
 import { updateMetadata } from 'pwa-helpers/metadata.js';
 
-import './sl-home.js';
+import './journey/sl-journey.js';
 import './dungeon/sl-dungeon.js';
 import './sl-view404.js';
 
@@ -99,7 +99,7 @@ class SlApp extends connect(store)(LitElement) {
   _renderPage(page) {
     switch (page) {
       case 'home':
-        return html`<sl-home></sl-home>`;
+        return html`<sl-journey></sl-journey>`;
       case 'cave':
         return html`<sl-dungeon></sl-dungeon>`;
       case 'view3':

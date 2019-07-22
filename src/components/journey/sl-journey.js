@@ -1,13 +1,13 @@
 import { LitElement, html } from 'lit-element';
 
 // These are the shared styles needed by this element.
-import { SharedStyles } from './shared-styles.js';
+import { SharedStyles } from '../shared-styles.js';
 
 import testEncounters from './test-encounters.json';
 
 const defaultContinueText = "Continue...";
 
-class SlHome extends LitElement {
+class SlJourney extends LitElement {
   static get properties() {
     return {
       currentEncounter: { type: Number },
@@ -45,4 +45,4 @@ class SlHome extends LitElement {
   }
 }
 
-window.customElements.define('sl-home', SlHome);
+window.customElements.define('sl-journey', SlJourney);
