@@ -26,5 +26,54 @@
         "text": "Or even, this!"
       }
     ]
+  },
+  {
+    "text": "Some choices may do things...",
+    "choices": [
+      {
+        "text": "Like triggering alerts!",
+        "outcome": ["alert", "This is a parameter"]
+      },
+      {
+        "text": "Or not."
+      }
+    ]
+  },
+  {
+    "text": "Or deciding where to go next!",
+    "choices": [
+      {
+        "text": "Like the mountains!",
+        "outcome": ["next", "mountains"]
+      },
+      {
+        "text": "Or the beach!",
+        "outcome": ["next", "beach"]
+      }
+    ]
+  },
+  {
+    "text": "Yeah! Mountains rule!",
+    "label": "mountains",
+    "choices": [
+      {
+        "text": "Climb on!",
+        "outcome": ["next", "roads"]
+      }
+    ]
+  },
+  {
+    "text": "Yes! The beach is the best!",
+    "label": "beach",
+    "choices": [
+      {
+        "text": "Surf's up!",
+        "outcome": ["next", "roads"]
+      }
+    ]
+  },
+  {
+    "text": "But sometimes, different roads can lead to the same place.",
+    "label": "roads"
   }
 ]

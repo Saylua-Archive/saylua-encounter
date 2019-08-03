@@ -17,10 +17,32 @@ class SlJourney extends LitElement {
   constructor() {
     super();
     this.currentEncounter = 0;
+    this.encounterStack = [];
+    this.outcomeFunctions = {
+      alert: (message) => alert(message),
+      next: (label) => {
+        this.pushEncounter(testEncounters.findIndex(e => e.label === label));
+      },
+    };
+  }
+
+  choose(choice) {
+    if (choice.outcome) {
+      const parameters = choice.outcome.slice(1);
+      this.outcomeFunctions[choice.outcome[0]](...parameters);
+    }
   }
 
   continue(e) {
-    this.currentEncounter = (this.currentEncounter + 1) % testEncounters.length;
+    if (this.encounterStack.length > 0) {
+      this.currentEncounter = this.encounterStack.pop();
+    } else {
+      this.currentEncounter = (this.currentEncounter + 1) % testEncounters.length;
+    }
+  }
+
+  pushEncounter(encounter) {
+    this.encounterStack.push(encounter);
   }
 
   static get styles() {
@@ -33,7 +55,10 @@ class SlJourney extends LitElement {
     const encounter = testEncounters[this.currentEncounter];
 
     const choiceButtons = (encounter.choices && encounter.choices.map(choice => html`
-      <button @click=${this.continue}>
+      <button @click=${() => {
+        this.choose(choice);
+        this.continue();
+      }}>
         ${choice.text || defaultContinueText}
       </button>
     `)) || html`<button @click=${this.continue}>${defaultContinueText}</button>`;
