@@ -16,7 +16,7 @@ export const navigate = (path) => (dispatch) => {
 const updatePage = (page) => {
   return {
     type: UPDATE_PAGE,
-    page
+    page,
   };
 };
 
@@ -24,11 +24,11 @@ let snackbarTimer;
 
 export const showSnackbar = () => (dispatch) => {
   dispatch({
-    type: OPEN_SNACKBAR
+    type: OPEN_SNACKBAR,
   });
   window.clearTimeout(snackbarTimer);
   snackbarTimer = window.setTimeout(() =>
-    dispatch({ type: CLOSE_SNACKBAR }), 3000);
+    dispatch({type: CLOSE_SNACKBAR}), 3000);
 };
 
 export const updateOffline = (offline) => (dispatch, getState) => {
@@ -38,16 +38,16 @@ export const updateOffline = (offline) => (dispatch, getState) => {
   }
   dispatch({
     type: UPDATE_OFFLINE,
-    offline
+    offline,
   });
 };
 
 export const addCoins = (coins) => {
   return {
     type: ADD_COINS,
-    coins
-  }
-}
+    coins,
+  };
+};
 
 const INITIAL_STATE = {
   page: '',
@@ -61,28 +61,28 @@ const app = (state = INITIAL_STATE, action) => {
     case UPDATE_PAGE:
       return {
         ...state,
-        page: action.page
+        page: action.page,
       };
     case UPDATE_OFFLINE:
       return {
         ...state,
-        offline: action.offline
+        offline: action.offline,
       };
     case OPEN_SNACKBAR:
       return {
         ...state,
-        snackbarOpened: true
+        snackbarOpened: true,
       };
     case CLOSE_SNACKBAR:
       return {
         ...state,
-        snackbarOpened: false
+        snackbarOpened: false,
       };
     case ADD_COINS:
       return {
         ...state,
-        coins: state.coins + action.coins
-      }
+        coins: state.coins + action.coins,
+      };
     default:
       return state;
   }

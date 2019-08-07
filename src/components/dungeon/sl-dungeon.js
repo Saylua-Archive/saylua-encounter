@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit-element';
+import {LitElement, html, css} from 'lit-element';
 
 const MAP_TILE_WIDTH = 30;
 const MAP_TILE_HEIGHT = 30;
@@ -113,8 +113,8 @@ class SlDungeon extends LitElement {
     const startRow = Math.floor(MAP_TILE_HEIGHT / 2);
     const startCol = Math.floor(MAP_TILE_WIDTH / 2);
 
-    depthFirstSearchGeneration(this.objectMap, new Map(), this.tileGrid, startRow,
-      startCol, true);
+    depthFirstSearchGeneration(this.objectMap, new Map(),
+        this.tileGrid, startRow, startCol, true);
 
     this._row = startRow;
     this._col = startCol;
@@ -203,7 +203,8 @@ class SlDungeon extends LitElement {
   }
 }
 
-function depthFirstSearchGeneration(objectMap, visited, grid, row, col, isStart) {
+function depthFirstSearchGeneration(objectMap, visited, grid,
+    row, col, isStart) {
   // Tile not within grid coordinates.
   if (!isValidTile(grid, row, col)) return;
 

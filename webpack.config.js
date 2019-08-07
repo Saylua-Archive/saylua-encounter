@@ -4,9 +4,9 @@ module.exports = {
   entry: './src/components/sl-app.js',
   output: {
     filename: 'sl-app.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   devServer: {
-    contentBase: '.'
-  }
+    contentBase: '.',
+  },
 };

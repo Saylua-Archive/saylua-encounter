@@ -22,7 +22,8 @@
   "devDependencies": {
     "axe-core": "^3.0.0",
     "del": "^3.0.0",
-    "eslint": "^6.0.1",
+    "eslint": "^6.1.0",
+    "eslint-config-google": "^0.13.0",
     "eslint-plugin-lit": "^1.1.1",
     "mocha": "^5.2.0",
     "pixelmatch": "^4.0.2",
