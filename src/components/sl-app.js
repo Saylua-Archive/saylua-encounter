@@ -1,20 +1,20 @@
-import { LitElement, html, css } from 'lit-element';
-import { connect } from 'pwa-helpers/connect-mixin.js';
-import { installOfflineWatcher } from 'pwa-helpers/network.js';
-import { installRouter } from 'pwa-helpers/router.js';
-import { updateMetadata } from 'pwa-helpers/metadata.js';
+import {LitElement, html, css} from 'lit-element';
+import {connect} from 'pwa-helpers/connect-mixin.js';
+import {installOfflineWatcher} from 'pwa-helpers/network.js';
+import {installRouter} from 'pwa-helpers/router.js';
+import {updateMetadata} from 'pwa-helpers/metadata.js';
 
 import './journey/sl-journey.js';
 import './dungeon/sl-dungeon.js';
 import './sl-view404.js';
 
 // This element is connected to the Redux store.
-import { store } from '../store.js';
+import {store} from '../store.js';
 
 // These are the actions needed by this element.
 import {
   navigate,
-  updateOffline
+  updateOffline,
 } from '../reducers/app.js';
 
 import './snack-bar.js';
@@ -22,11 +22,11 @@ import './snack-bar.js';
 class SlApp extends connect(store)(LitElement) {
   static get properties() {
     return {
-      appTitle: { type: String },
-      _page: { type: String },
-      _snackbarOpened: { type: Boolean },
-      _offline: { type: Boolean },
-      _coins: { type: Number },
+      appTitle: {type: String},
+      _page: {type: String},
+      _snackbarOpened: {type: Boolean},
+      _offline: {type: Boolean},
+      _coins: {type: Number},
     };
   }
 
@@ -71,7 +71,7 @@ class SlApp extends connect(store)(LitElement) {
           padding: 0px;
           grid-area: main;
         }
-      `
+      `,
     ];
   }
 
@@ -111,7 +111,8 @@ class SlApp extends connect(store)(LitElement) {
   }
 
   firstUpdated() {
-    installRouter((location) => store.dispatch(navigate(decodeURIComponent(location.pathname))));
+    installRouter((location) =>
+      store.dispatch(navigate(decodeURIComponent(location.pathname))));
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
   }
 
@@ -120,7 +121,7 @@ class SlApp extends connect(store)(LitElement) {
       const pageTitle = this.appTitle + ' - ' + this._page;
       updateMetadata({
         title: pageTitle,
-        description: pageTitle
+        description: pageTitle,
       });
     }
   }

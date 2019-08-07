@@ -1,10 +1,10 @@
-import { html, LitElement } from 'lit-element';
-import { SharedStyles } from './shared-styles.js';
+import {html, LitElement} from 'lit-element';
+import {SharedStyles} from './shared-styles.js';
 
 class SlView404 extends LitElement {
   static get styles() {
     return [
-      SharedStyles
+      SharedStyles,
     ];
   }
 
@@ -17,7 +17,7 @@ class SlView404 extends LitElement {
           <a href="/">home</a> and try again?
         </p>
       </section>
-    `
+    `;
   }
 }
 

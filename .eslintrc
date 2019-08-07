@@ -6,9 +6,12 @@
 
   "plugins": ["lit"],
 
-  "extends": ["plugin:lit/recommended"],
+  "extends": "google",
+  "rules": {
+    "require-jsdoc": 0
+  },
   "parserOptions": {
     "ecmaVersion": 2018,
-    "sourceType": "module",
+    "sourceType": "module"
   }
 }

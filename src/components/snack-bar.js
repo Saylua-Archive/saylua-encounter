@@ -1,9 +1,9 @@
-import { LitElement, html, css } from 'lit-element';
+import {LitElement, html, css} from 'lit-element';
 
 class SnackBar extends LitElement {
   static get properties() {
     return {
-      active: { type: Boolean },
+      active: {type: Boolean},
     };
   }
 
@@ -39,7 +39,7 @@ class SnackBar extends LitElement {
             margin: auto;
           }
         }
-      `
+      `,
     ];
   }
 
