@@ -25,7 +25,8 @@ class SlApp extends connect(store)(LitElement) {
       appTitle: { type: String },
       _page: { type: String },
       _snackbarOpened: { type: Boolean },
-      _offline: { type: Boolean }
+      _offline: { type: Boolean },
+      _coins: { type: Number },
     };
   }
 
@@ -83,7 +84,7 @@ class SlApp extends connect(store)(LitElement) {
       </header>
 
       <aside>
-        you are an amazing spritekeeper
+        You have ${this._coins || 'no'} coins.
       </aside>
 
       <main role="main">
@@ -128,6 +129,7 @@ class SlApp extends connect(store)(LitElement) {
     this._page = state.app.page;
     this._offline = state.app.offline;
     this._snackbarOpened = state.app.snackbarOpened;
+    this._coins = state.app.coins;
   }
 }
 

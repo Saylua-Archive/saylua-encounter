@@ -75,5 +75,14 @@
   {
     "text": "But sometimes, different roads can lead to the same place.",
     "label": "roads"
+  },
+  {
+    "text": "You may find things beside the road.",
+    "choices": [
+      {
+        "text": "Like coins!",
+        "outcome": ["addCoins", 5]
+      }
+    ]
   }
 ]

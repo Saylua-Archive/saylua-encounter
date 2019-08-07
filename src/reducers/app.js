@@ -2,6 +2,7 @@ export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const OPEN_SNACKBAR = 'OPEN_SNACKBAR';
 export const CLOSE_SNACKBAR = 'CLOSE_SNACKBAR';
+export const ADD_COINS = 'ADD_COINS';
 
 export const navigate = (path) => (dispatch) => {
   // Extract the page name from path.
@@ -41,10 +42,18 @@ export const updateOffline = (offline) => (dispatch, getState) => {
   });
 };
 
+export const addCoins = (coins) => {
+  return {
+    type: ADD_COINS,
+    coins
+  }
+}
+
 const INITIAL_STATE = {
   page: '',
   offline: false,
   snackbarOpened: false,
+  coins: 0,
 };
 
 const app = (state = INITIAL_STATE, action) => {
@@ -69,6 +78,11 @@ const app = (state = INITIAL_STATE, action) => {
         ...state,
         snackbarOpened: false
       };
+    case ADD_COINS:
+      return {
+        ...state,
+        coins: state.coins + action.coins
+      }
     default:
       return state;
   }

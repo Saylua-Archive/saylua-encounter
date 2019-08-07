@@ -7,6 +7,9 @@ import testEncounters from './test-encounters.json';
 
 const defaultContinueText = "Continue...";
 
+import { store } from '../../store.js';
+import { addCoins } from '../../reducers/app.js';
+
 class SlJourney extends LitElement {
   static get properties() {
     return {
@@ -23,6 +26,9 @@ class SlJourney extends LitElement {
       next: (label) => {
         this.pushEncounter(testEncounters.findIndex(e => e.label === label));
       },
+      addCoins: (coins) => {
+        store.dispatch(addCoins(coins));
+      }
     };
   }
 
