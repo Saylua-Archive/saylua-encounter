@@ -142,6 +142,10 @@
   },
   {
     "text": "The drummer smiles and nods in your direction.",
-    "outcome": ["pushEncounter", "main"]
+    "choices": [
+      {
+        "outcome": ["pushEncounter", "main"]
+      }
+    ]
   }
 ]
