@@ -127,10 +127,10 @@ class SlApp extends connect(store)(LitElement) {
   }
 
   stateChanged(state) {
-    this._page = state.app.page;
-    this._offline = state.app.offline;
-    this._snackbarOpened = state.app.snackbarOpened;
-    this._coins = state.app.coins;
+    this._page = state.app.navigation.page;
+    this._offline = state.app.navigation.offline;
+    this._snackbarOpened = state.app.navigation.snackbarOpened;
+    this._coins = state.app.game.coins;
   }
 }
 

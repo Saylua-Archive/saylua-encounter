@@ -6,8 +6,9 @@
 
   "plugins": ["lit"],
 
-  "extends": "google",
+  "extends": ["eslint:recommended", "google"],
   "rules": {
+    "prefer-destructuring": ["error", {"object": true, "array": false}],
     "require-jsdoc": 0
   },
   "parserOptions": {

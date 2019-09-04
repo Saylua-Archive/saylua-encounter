@@ -56,8 +56,8 @@ class SlDungeon extends LitElement {
   }
 
   render() {
-    const rOrigin = this.rOrigin;
-    const cOrigin = this.cOrigin;
+    const {rOrigin} = this;
+    const {cOrigin} = this;
 
     return html`
       ${this.renderedTiles.map((row, r) => html`
@@ -163,8 +163,8 @@ class SlDungeon extends LitElement {
   }
 
   get renderedTiles() {
-    const rOrigin = this.rOrigin;
-    const cOrigin = this.cOrigin;
+    const {rOrigin} = this;
+    const {cOrigin} = this;
 
     return [...Array(this.viewHeight)].map((_, i) => {
       const r = rOrigin + i;
