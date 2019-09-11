@@ -15,11 +15,18 @@ import {store} from '../store.js';
 import {
   navigate,
   updateOffline,
-} from '../reducers/app.js';
+} from '../reducers/sayluaReducer.js';
 
 import './snack-bar.js';
 
+/**
+ * The root component.
+ * Installs the router.
+ */
 class SlApp extends connect(store)(LitElement) {
+  /**
+   * Defines LitElement properties.
+   */
   static get properties() {
     return {
       appTitle: {type: String},
@@ -30,6 +37,9 @@ class SlApp extends connect(store)(LitElement) {
     };
   }
 
+  /**
+   * Gets app styles.
+   */
   static get styles() {
     return [
       css`
@@ -75,6 +85,10 @@ class SlApp extends connect(store)(LitElement) {
     ];
   }
 
+  /**
+   * LitElement render function
+   * @return {Object}
+   */
   render() {
     return html`
       <header>
@@ -97,6 +111,11 @@ class SlApp extends connect(store)(LitElement) {
     `;
   }
 
+  /**
+   * Choose which page to render.
+   * @param {String} page - The page to render.
+   * @return {Object} - LitElement render data.
+   */
   _renderPage(page) {
     switch (page) {
       case 'home':
@@ -110,12 +129,19 @@ class SlApp extends connect(store)(LitElement) {
     }
   }
 
+  /**
+   * Start with routing.
+   */
   firstUpdated() {
     installRouter((location) =>
       store.dispatch(navigate(decodeURIComponent(location.pathname))));
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
   }
 
+  /**
+   * Handle if _page changed.
+   * @param {Object} changedProps - Props that have been updated.
+   */
   updated(changedProps) {
     if (changedProps.has('_page')) {
       const pageTitle = this.appTitle + ' - ' + this._page;
@@ -126,11 +152,15 @@ class SlApp extends connect(store)(LitElement) {
     }
   }
 
+  /**
+   * Handle if Redux state changed.
+   * @param {Object} state - the new state.
+   */
   stateChanged(state) {
-    this._page = state.app.page;
-    this._offline = state.app.offline;
-    this._snackbarOpened = state.app.snackbarOpened;
-    this._coins = state.app.coins;
+    this._page = state.sayluaReducer.navigation.page;
+    this._offline = state.sayluaReducer.navigation.offline;
+    this._snackbarOpened = state.sayluaReducer.navigation.snackbarOpened;
+    this._coins = state.sayluaReducer.game.coins;
   }
 }
 

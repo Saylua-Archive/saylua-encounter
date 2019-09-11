@@ -9,6 +9,7 @@
     "watch": "webpack --watch",
     "build": "webpack --mode production",
     "start": "webpack-dev-server --open",
+    "lint": "eslint src",
     "test": ""
   },
   "dependencies": {
@@ -24,6 +25,7 @@
     "del": "^3.0.0",
     "eslint": "^6.1.0",
     "eslint-config-google": "^0.13.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-lit": "^1.1.1",
     "mocha": "^5.2.0",
     "pixelmatch": "^4.0.2",

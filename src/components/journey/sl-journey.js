@@ -1,86 +1,97 @@
 import {LitElement, html} from 'lit-element';
+import {connect} from 'pwa-helpers/connect-mixin';
 
 // These are the shared styles needed by this element.
-import {SharedStyles} from '../shared-styles.js';
+import {SharedStyles} from '../shared-styles';
 
-import testEncounters from './test-encounters.json';
+import {store} from '../../store';
+import {advance, checkRequirement,
+  handleRequirement, handleOutcome} from './helpers';
 
-const defaultContinueText = 'Continue...';
+const DEFAULT_CONTINUE_TEXT = 'Continue...';
 
-import {store} from '../../store.js';
-import {addCoins} from '../../reducers/app.js';
-
-class SlJourney extends LitElement {
+/**
+ * The main Journey component.
+ */
+class SlJourney extends connect(store)(LitElement) {
+  /**
+   * Defines LitElement properties.
+   */
   static get properties() {
     return {
-      currentEncounter: {type: Number},
+      _currentEncounter: {type: Number},
+      _journey: {type: Object},
+      _gameState: {type: Object},
     };
   }
 
-  constructor() {
-    super();
-    this.currentEncounter = 0;
-    this.encounterStack = [];
-    this.outcomeFunctions = {
-      alert: (message) => alert(message),
-      next: (label) => {
-        this.pushEncounter(testEncounters.findIndex((e) => e.label === label));
-      },
-      addCoins: (coins) => {
-        store.dispatch(addCoins(coins));
-      },
-    };
-  }
-
-  choose(choice) {
-    if (choice.outcome) {
-      const parameters = choice.outcome.slice(1);
-      this.outcomeFunctions[choice.outcome[0]](...parameters);
-    }
-  }
-
+  /**
+   * Just calls advance for now.
+   * May do more when clicks are more decoupled from Outcomes.
+   * @param {Event} e - Click Event.
+   */
   continue(e) {
-    if (this.encounterStack.length > 0) {
-      this.currentEncounter = this.encounterStack.pop();
-    } else {
-      this.currentEncounter = (this.currentEncounter + 1)
-        % testEncounters.length;
-    }
+    advance();
   }
 
-  pushEncounter(encounter) {
-    this.encounterStack.push(encounter);
-  }
-
+  /**
+   * Gets shared styles.
+   */
   static get styles() {
     return [
       SharedStyles,
     ];
   }
 
+  /**
+   * LitElement render function.
+   * @return {Object}
+   */
   render() {
-    const encounter = testEncounters[this.currentEncounter];
+    const encounter = this._journey[this._currentEncounter];
 
     return html`
-      ${encounter.text}
+      ${encounter ? encounter.text : `You have finished your journey.`}
       ${this._renderChoiceButtons(encounter)}
     `;
   }
 
+  /**
+   * Takes an Encounter and renders the relevant choice buttons.
+   * @param {Object} encounter - A JSON-formatted Encounter.
+   * @return {String} - Buttons as HTML with appropriate click handlers.
+   */
   _renderChoiceButtons(encounter) {
-    if (encounter.choices) {
-      return encounter.choices.map((choice) =>
+    if (encounter && encounter.choices) {
+      const availableChoices = encounter.choices.filter((choice) => {
+        return !choice.requirement || checkRequirement(
+            this._gameState, choice.requirement);
+      }
+      );
+      return availableChoices.map((choice) =>
         html`<button @click=${() => {
-          this.choose(choice);
+          choice.requirement && handleRequirement(this._gameState,
+              choice.requirement);
+          choice.outcome && handleOutcome(choice.outcome);
           this.continue();
         }}>
-          ${choice.text || defaultContinueText}
+          ${choice.text || DEFAULT_CONTINUE_TEXT}
         </button>`);
     }
     return html`
       <button @click=${this.continue}>
-        ${defaultContinueText}
+        ${DEFAULT_CONTINUE_TEXT}
       </button>`;
+  }
+
+  /**
+   * Deals with Redux state changes.
+   * @param {Object} state - The updated state.
+   */
+  stateChanged(state) {
+    this._currentEncounter = state.sayluaReducer.game.currentEncounter;
+    this._journey = state.sayluaReducer.game.journey;
+    this._gameState = state.sayluaReducer.game;
   }
 }
 

@@ -44,11 +44,11 @@
     "choices": [
       {
         "text": "Like the mountains!",
-        "outcome": ["next", "mountains"]
+        "outcome": ["pushEncounter", "mountains"]
       },
       {
         "text": "Or the beach!",
-        "outcome": ["next", "beach"]
+        "outcome": ["pushEncounter", "beach"]
       }
     ]
   },
@@ -58,7 +58,7 @@
     "choices": [
       {
         "text": "Climb on!",
-        "outcome": ["next", "roads"]
+        "outcome": ["pushEncounter", "roads"]
       }
     ]
   },
@@ -68,7 +68,7 @@
     "choices": [
       {
         "text": "Surf's up!",
-        "outcome": ["next", "roads"]
+        "outcome": ["pushEncounter", "roads"]
       }
     ]
   },
@@ -82,6 +82,33 @@
       {
         "text": "Like coins!",
         "outcome": ["addCoins", 5]
+      },
+      {
+        "text": "Or nothing!"
+      }
+    ]
+  },
+  {
+    "text": "Other encounters might require things from you.",
+    "choices": [
+      {
+        "text": "Like having five coins!",
+        "requirement": ["hasCoins", 5]
+      },
+      {
+        "text": "Or not."
+      }
+    ]
+  },
+  {
+    "text": "Or even take things from you!",
+    "choices": [
+      {
+        "text": "Can I have five coins?",
+        "requirement": ["takeCoins", 5]
+      },
+      {
+        "text": "Never!"
       }
     ]
   }
