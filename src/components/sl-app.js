@@ -20,11 +20,12 @@ import {
 import './snack-bar.js';
 
 /**
- * The main app component.
+ * The root component
+ * Installs the router
  */
 class SlApp extends connect(store)(LitElement) {
   /**
-   * Gets UI relevant properties
+   * Defines LitElement properties
    */
   static get properties() {
     return {
@@ -85,8 +86,8 @@ class SlApp extends connect(store)(LitElement) {
   }
 
   /**
-   * App render function
-   * @return {String} - Formatted HTML
+   * LitElement render function
+   * @return {Object}
    */
   render() {
     return html`

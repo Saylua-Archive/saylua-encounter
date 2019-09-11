@@ -15,7 +15,7 @@ const DEFAULT_CONTINUE_TEXT = 'Continue...';
  */
 class SlJourney extends connect(store)(LitElement) {
   /**
-   * Gets UI relevant properties
+   * Defines LitElement properties
    */
   static get properties() {
     return {
@@ -44,8 +44,8 @@ class SlJourney extends connect(store)(LitElement) {
   }
 
   /**
-   * Journey render function
-   * @return {String} - Journey main HTML
+   * LitElement render function
+   * @return {Object}
    */
   render() {
     const encounter = this._journey[this._currentEncounter];
