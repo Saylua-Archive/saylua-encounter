@@ -11,11 +11,11 @@ import {advance, checkRequirement,
 const DEFAULT_CONTINUE_TEXT = 'Continue...';
 
 /**
- * The main journey component.
+ * The main Journey component.
  */
 class SlJourney extends connect(store)(LitElement) {
   /**
-   * Defines LitElement properties
+   * Defines LitElement properties.
    */
   static get properties() {
     return {
@@ -26,16 +26,16 @@ class SlJourney extends connect(store)(LitElement) {
   }
 
   /**
-   * Just calls advance for now
-   * May do more when clicks are more decoupled from outcomes
-   * @param {Event} e - Click event
+   * Just calls advance for now.
+   * May do more when clicks are more decoupled from Outcomes.
+   * @param {Event} e - Click Event.
    */
   continue(e) {
     advance();
   }
 
   /**
-   * Gets shared styles
+   * Gets shared styles.
    */
   static get styles() {
     return [
@@ -44,7 +44,7 @@ class SlJourney extends connect(store)(LitElement) {
   }
 
   /**
-   * LitElement render function
+   * LitElement render function.
    * @return {Object}
    */
   render() {
@@ -57,9 +57,9 @@ class SlJourney extends connect(store)(LitElement) {
   }
 
   /**
-   * Takes an encounter and renders the relevant choice buttons
-   * @param {Object} encounter - A JSON-formatted encounter
-   * @return {String} - Buttons as HTML with appropriate click handlers
+   * Takes an Encounter and renders the relevant choice buttons.
+   * @param {Object} encounter - A JSON-formatted Encounter.
+   * @return {String} - Buttons as HTML with appropriate click handlers.
    */
   _renderChoiceButtons(encounter) {
     if (encounter && encounter.choices) {
@@ -85,8 +85,8 @@ class SlJourney extends connect(store)(LitElement) {
   }
 
   /**
-   * Deals with state changes
-   * @param {Object} state - The updated state
+   * Deals with Redux state changes.
+   * @param {Object} state - The updated state.
    */
   stateChanged(state) {
     this._currentEncounter = state.sayluaReducer.game.currentEncounter;

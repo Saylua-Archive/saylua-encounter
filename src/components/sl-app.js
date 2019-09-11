@@ -20,12 +20,12 @@ import {
 import './snack-bar.js';
 
 /**
- * The root component
- * Installs the router
+ * The root component.
+ * Installs the router.
  */
 class SlApp extends connect(store)(LitElement) {
   /**
-   * Defines LitElement properties
+   * Defines LitElement properties.
    */
   static get properties() {
     return {
@@ -38,7 +38,7 @@ class SlApp extends connect(store)(LitElement) {
   }
 
   /**
-   * Gets app styles
+   * Gets app styles.
    */
   static get styles() {
     return [
@@ -112,9 +112,9 @@ class SlApp extends connect(store)(LitElement) {
   }
 
   /**
-   * Choose which page to render
-   * @param {String} page - which page to render
-   * @return {String} - formatted HTML
+   * Choose which page to render.
+   * @param {String} page - The page to render.
+   * @return {Object} - LitElement render data.
    */
   _renderPage(page) {
     switch (page) {
@@ -130,7 +130,7 @@ class SlApp extends connect(store)(LitElement) {
   }
 
   /**
-   * Start with routing
+   * Start with routing.
    */
   firstUpdated() {
     installRouter((location) =>
@@ -139,8 +139,8 @@ class SlApp extends connect(store)(LitElement) {
   }
 
   /**
-   * Handle if _page changed
-   * @param {Object} changedProps - Props that have been updated
+   * Handle if _page changed.
+   * @param {Object} changedProps - Props that have been updated.
    */
   updated(changedProps) {
     if (changedProps.has('_page')) {
@@ -153,8 +153,8 @@ class SlApp extends connect(store)(LitElement) {
   }
 
   /**
-   * Handle if state changed
-   * @param {Object} state - the new state
+   * Handle if Redux state changed.
+   * @param {Object} state - the new state.
    */
   stateChanged(state) {
     this._page = state.sayluaReducer.navigation.page;

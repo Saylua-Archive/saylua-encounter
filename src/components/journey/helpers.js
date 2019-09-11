@@ -6,17 +6,17 @@ import {
 } from '../../reducers/game';
 
 /**
- * Advance to the next encounter
+ * Advance to the next encounter.
  */
 export function advance() {
   store.dispatch(advanceEncounter());
 }
 
 /**
- * Check if a set of requirements are met by a game state
- * @param {Object} state - A game state to check
- * @param {Array} requirement - An array with a requirement and its parameters
- * @return {Boolean} - Whether or not the state passes the requirement
+ * Check if a set of requirements are met by a game Redux state.
+ * @param {Object} state - A game Redux state to check.
+ * @param {Array} requirement - An Array with a requirement and its parameters.
+ * @return {Boolean} - Whether or not the state passes the requirement.
  */
 export function checkRequirement(state, requirement) {
   const parameters = requirement.slice(1);
@@ -24,9 +24,9 @@ export function checkRequirement(state, requirement) {
 }
 
 /**
- * Apply any outcomes (such as costs) implied by requirements
- * @param {Object} state - A game state to mutate
- * @param {Array} requirement - An array with a requirement and its parameters
+ * Apply any Outcomes (such as costs) implied by Requirements.
+ * @param {Object} state - A Redux game state to mutate.
+ * @param {Array} requirement - An Array with a Requirement and its parameters.
  */
 export function handleRequirement(state, requirement) {
   const {outcome} = REQUIREMENTS[requirement[0]];
@@ -35,8 +35,8 @@ export function handleRequirement(state, requirement) {
 }
 
 /**
- * Apply an outcome
- * @param {Array} outcome - An array with an outcome and its parameters
+ * Apply an Outcome.
+ * @param {Array} outcome - An Array with an Outcome and its parameters.
  */
 export function handleOutcome(outcome) {
   const type = outcome[0];

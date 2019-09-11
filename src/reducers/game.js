@@ -39,20 +39,20 @@ export const advanceEncounter = () => {
 };
 
 /**
- * Lookup the index of the first encounter in a Journey with a given label
- * @param {Object} journey - the Journey to search
- * @param {String} label - the label to search for
- * @return {Number} - the found index
+ * Lookup the index of the first Encounter in a Journey with a given label.
+ * @param {Object} journey - The Journey to search.
+ * @param {String} label - The label to search for.
+ * @return {Number} - The first matching index.
  */
 function findEncounter(journey, label) {
   return journey.findIndex((e) => e.label === label);
 }
 
 /**
- * Return a State with an encounter pushed into its encounterstack
- * @param {Object} state - the initial State
- * @param {Number} encounter - the encounter index to add to the stack
- * @return {Object} - the new State
+ * Return a State with an Encounter pushed into its encounterStack.
+ * @param {Object} state - The initial Redux state.
+ * @param {Number} encounter - The Encounter index to add to the stack.
+ * @return {Object} - The new state.
  */
 function pushEncounterHelper(state, encounter) {
   const {encounterStack, journey} = state;
@@ -65,9 +65,9 @@ function pushEncounterHelper(state, encounter) {
 }
 
 /**
- * Convert an object with numbers for keys to an array
- * @param {Object} obj - the object to convert
- * @return {Array} - the new array
+ * Convert an Object with Numbers for keys to an Array.
+ * @param {Object} obj - The Object to convert.
+ * @return {Array} - The new Array.
  */
 function numsArray(obj) {
   const keys = Object.keys(obj);
@@ -79,10 +79,10 @@ function numsArray(obj) {
 }
 
 /**
- * Gameplay reducer
- * @param {Object} state - an optional current game state
- * @param {Object} action - redux action
- * @return {Object} - the updated state
+ * Gameplay reducer.
+ * @param {Object} state - An optional current game Redux state.
+ * @param {Object} action - Redux action.
+ * @return {Object} - The updated state.
  */
 export function game(state = INITIAL_STATE, action) {
   const {encounterStack, currentEncounter, coins, journey} = state;
