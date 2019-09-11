@@ -86,7 +86,7 @@ class SlApp extends connect(store)(LitElement) {
 
   /**
    * App render function
-   * @return {string} - Formatted HTML
+   * @return {String} - Formatted HTML
    */
   render() {
     return html`
@@ -112,8 +112,8 @@ class SlApp extends connect(store)(LitElement) {
 
   /**
    * Choose which page to render
-   * @param {string} page - which page to render
-   * @return {string} - formatted HTML
+   * @param {String} page - which page to render
+   * @return {String} - formatted HTML
    */
   _renderPage(page) {
     switch (page) {

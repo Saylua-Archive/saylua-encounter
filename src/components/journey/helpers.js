@@ -15,8 +15,8 @@ export function advance() {
 /**
  * Check if a set of requirements are met by a game state
  * @param {Object} state - A game state to check
- * @param {Object} requirement - An array with a requirement and its parameters
- * @return {boolean} - Whether or not the state passes the requirement
+ * @param {Array} requirement - An array with a requirement and its parameters
+ * @return {Boolean} - Whether or not the state passes the requirement
  */
 export function checkRequirement(state, requirement) {
   const parameters = requirement.slice(1);
@@ -26,7 +26,7 @@ export function checkRequirement(state, requirement) {
 /**
  * Apply any outcomes (such as costs) implied by requirements
  * @param {Object} state - A game state to mutate
- * @param {Object} requirement - An array with a requirement and its parameters
+ * @param {Array} requirement - An array with a requirement and its parameters
  */
 export function handleRequirement(state, requirement) {
   const {outcome} = REQUIREMENTS[requirement[0]];
@@ -36,7 +36,7 @@ export function handleRequirement(state, requirement) {
 
 /**
  * Apply an outcome
- * @param {Object} outcome - An array with an outcome and its parameters
+ * @param {Array} outcome - An array with an outcome and its parameters
  */
 export function handleOutcome(outcome) {
   const type = outcome[0];

@@ -28,7 +28,7 @@ class SlJourney extends connect(store)(LitElement) {
   /**
    * Just calls advance for now
    * May do more when clicks are more decoupled from outcomes
-   * @param {event} e - Click event
+   * @param {Event} e - Click event
    */
   continue(e) {
     advance();
@@ -45,7 +45,7 @@ class SlJourney extends connect(store)(LitElement) {
 
   /**
    * Journey render function
-   * @return {string} - Journey main HTML
+   * @return {String} - Journey main HTML
    */
   render() {
     const encounter = this._journey[this._currentEncounter];
@@ -59,7 +59,7 @@ class SlJourney extends connect(store)(LitElement) {
   /**
    * Takes an encounter and renders the relevant choice buttons
    * @param {Object} encounter - A JSON-formatted encounter
-   * @return {string} - Buttons as HTML with appropriate click handlers
+   * @return {String} - Buttons as HTML with appropriate click handlers
    */
   _renderChoiceButtons(encounter) {
     if (encounter && encounter.choices) {
