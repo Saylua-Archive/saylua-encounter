@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {LitElement, html, css} from 'lit-element';
 
 class SnackBar extends LitElement {

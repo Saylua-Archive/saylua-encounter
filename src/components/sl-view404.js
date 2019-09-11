@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {html, LitElement} from 'lit-element';
 import {SharedStyles} from './shared-styles.js';
 

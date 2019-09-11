@@ -6,10 +6,9 @@
 
   "plugins": ["lit"],
 
-  "extends": ["eslint:recommended", "google"],
+  "extends": ["eslint:recommended", "plugin:import/errors", "google"],
   "rules": {
-    "prefer-destructuring": ["error", {"object": true, "array": false}],
-    "require-jsdoc": 0
+    "prefer-destructuring": ["error", {"object": true, "array": false}]
   },
   "parserOptions": {
     "ecmaVersion": 2018,

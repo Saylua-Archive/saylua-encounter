@@ -1,3 +1,4 @@
+/* eslint-disable */
 import {LitElement, html, css} from 'lit-element';
 
 const MAP_TILE_WIDTH = 30;

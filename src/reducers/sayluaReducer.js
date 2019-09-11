@@ -1,6 +1,6 @@
 import {combineReducers} from 'redux';
 
-import game from './game';
+import {game} from './game';
 
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';

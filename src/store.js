@@ -7,7 +7,7 @@ import {
 import thunk from 'redux-thunk';
 import {lazyReducerEnhancer} from 'pwa-helpers/lazy-reducer-enhancer.js';
 
-import app from './reducers/app.js';
+import sayluaReducer from './reducers/sayluaReducer.js';
 
 const devCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -19,5 +19,5 @@ export const store = createStore(
 );
 
 store.addReducers({
-  app,
+  sayluaReducer,
 });

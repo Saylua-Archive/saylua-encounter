@@ -38,10 +38,22 @@ export const advanceEncounter = () => {
   };
 };
 
+/**
+ * Lookup the index of the first encounter in a Journey with a given label
+ * @param {Object} journey - the Journey to search
+ * @param {string} label - the label to search for
+ * @return {number} - the found index
+ */
 function findEncounter(journey, label) {
   return journey.findIndex((e) => e.label === label);
 }
 
+/**
+ * Return a State with an encounter pushed into its encounterstack
+ * @param {Object} state - the initial State
+ * @param {number} encounter - the encounter index to add to the stack
+ * @return {Object} - the new State
+ */
 function pushEncounterHelper(state, encounter) {
   const {encounterStack, journey} = state;
   const newStack = encounterStack.slice(0);
@@ -52,16 +64,27 @@ function pushEncounterHelper(state, encounter) {
   };
 }
 
+/**
+ * Convert an object with numbers for keys to an array
+ * @param {Object} obj - the object to convert
+ * @return {array} - the new array
+ */
 function numsArray(obj) {
   const keys = Object.keys(obj);
-  const result = [];
+  const arr = [];
   for (let i = 0; i < keys.length; i++) {
-    obj[i] && result.push(obj[i]);
+    obj[i] && arr.push(obj[i]);
   }
-  return result;
+  return arr;
 }
 
-export default function game(state = INITIAL_STATE, action) {
+/**
+ * Gameplay reducer
+ * @param {Object} state - an optional current game state
+ * @param {Object} action - redux action
+ * @return {Object} - the updated state
+ */
+export function game(state = INITIAL_STATE, action) {
   const {encounterStack, currentEncounter, coins, journey} = state;
 
   switch (action.type) {
