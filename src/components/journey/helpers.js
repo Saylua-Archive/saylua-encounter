@@ -1,5 +1,6 @@
 import {store} from '../../store';
 import REQUIREMENTS from './requirements';
+import {GAME_FUNCTIONS} from './gameFunctions';
 
 import {
   advanceEncounter,
@@ -31,19 +32,28 @@ export function checkRequirement(state, requirement) {
 export function handleRequirement(state, requirement) {
   const {outcome} = REQUIREMENTS[requirement[0]];
   const parameters = requirement.slice(1);
-  outcome && handleOutcome(outcome(state, ...parameters));
+  outcome && evaluate(outcome(state, ...parameters));
 }
 
 /**
- * Apply an Outcome.
+ * Evaluate an Outcome. May trigger side effects or return a value.
  * @param {Array} outcome - An Array with an Outcome and its parameters.
+ * @param {Object} localState - An optional local game state.
+ * @param {Object} globalState - An optional global game state.
+ * @return {Object} - The non-array result of the game function(s).
  */
-export function handleOutcome(outcome) {
-  const type = outcome[0];
-  const parameters = outcome.slice(1);
-  const action = {
-    type,
-    ...parameters,
-  };
-  store.dispatch(action);
+export function evaluate(outcome, localState={}, globalState={}) {
+  if (Array.isArray(outcome)) {
+    const type = outcome[0];
+    const parameters = outcome.slice(1);
+    if (localState[type]) {
+      return localState[type];
+    }
+    if (globalState[type]) {
+      return globalState[type];
+    }
+    return evaluate(GAME_FUNCTIONS[type](...parameters));
+  } else {
+    return outcome;
+  }
 }
