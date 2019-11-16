@@ -6,7 +6,7 @@ import {SharedStyles} from '../shared-styles';
 
 import {store} from '../../store';
 import {advance, checkRequirement,
-  handleRequirement, handleOutcome} from './helpers';
+  handleRequirement, evaluate} from './helpers';
 
 const DEFAULT_CONTINUE_TEXT = 'Continue...';
 
@@ -72,7 +72,7 @@ class SlJourney extends connect(store)(LitElement) {
         html`<button @click=${() => {
           choice.requirement && handleRequirement(this._gameState,
               choice.requirement);
-          choice.outcome && handleOutcome(choice.outcome);
+          choice.outcome && evaluate(choice.outcome);
           this.continue();
         }}>
           ${choice.text || DEFAULT_CONTINUE_TEXT}

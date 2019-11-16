@@ -83,6 +83,20 @@
   },
   {
     "label": "games",
+    "text": "The tent is full of games. Which one would you like to try?",
+    "choices": [
+      {
+        "text": "The big wheel!",
+        "outcome": ["pushEncounter", "wheel"]
+      },
+      {
+        "text": "Leave the tent.",
+        "outcome": ["pushEncounter", "main"]
+      }
+    ]
+  },
+  {
+    "label": "wheel",
     "text": "Step right up! Spin the wheel and try your luck!",
     "choices": [
       {
@@ -122,6 +136,10 @@
     "choices": [
       {
         "text": "Mmmmmm...",
+        "outcome": ["pushEncounter", "lasagna"]
+      },
+      {
+        "text": "Not now.",
         "outcome": ["pushEncounter", "main"]
       }
     ]

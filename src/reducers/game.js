@@ -2,7 +2,6 @@ export const ADD_COINS = 'addCoins';
 export const PUSH_ENCOUNTER = 'pushEncounter';
 export const PUSH_RANDOM = 'pushRandom';
 export const ADVANCE_ENCOUNTER = 'advanceEncounter';
-export const ALERT = 'alert';
 
 import fair from '../components/journey/paths/fair.json';
 
@@ -25,10 +24,11 @@ export const addCoins = (coins) => {
   };
 };
 
-export const pushEncounter = (label) => {
+export const pushEncounter = (label, encounterState) => {
   return {
     type: PUSH_ENCOUNTER,
     label,
+    encounterState,
   };
 };
 
@@ -52,12 +52,18 @@ function findEncounter(journey, label) {
  * Return a State with an Encounter pushed into its encounterStack.
  * @param {Object} state - The initial Redux state.
  * @param {Number} encounter - The Encounter index to add to the stack.
+ * @param {Object} encounterState - The initial state for the new encounter.
  * @return {Object} - The new state.
  */
-function pushEncounterHelper(state, encounter) {
+function pushEncounterHelper(state, encounter, encounterState) {
   const {encounterStack, journey} = state;
   const newStack = encounterStack.slice(0);
-  newStack.push(findEncounter(journey, encounter));
+  newStack.push(
+      {
+        index: findEncounter(journey, encounter),
+        encounterState,
+      }
+  );
   return {
     ...state,
     encounterStack: newStack,
@@ -88,9 +94,6 @@ export function game(state = INITIAL_STATE, action) {
   const {encounterStack, currentEncounter, coins, journey} = state;
 
   switch (action.type) {
-    case ALERT:
-      alert(action[0]);
-      return {...state};
     case ADD_COINS:
       return {
         ...state,
@@ -101,7 +104,9 @@ export function game(state = INITIAL_STATE, action) {
         return {
           ...state,
           encounterStack: encounterStack.slice(0, -1),
-          currentEncounter: encounterStack[encounterStack.length - 1],
+          currentEncounter: encounterStack[encounterStack.length - 1].index,
+          encounterState: encounterStack[encounterStack.length - 1]
+              .encounterState,
         };
       }
       return {
@@ -109,7 +114,7 @@ export function game(state = INITIAL_STATE, action) {
         currentEncounter: (currentEncounter + 1) % journey.length,
       };
     case PUSH_ENCOUNTER:
-      return pushEncounterHelper(state, action[0]);
+      return pushEncounterHelper(state, action[0], action[1]);
     case PUSH_RANDOM:
       return pushEncounterHelper(state, randomChoice(numsArray(action)));
     default:
