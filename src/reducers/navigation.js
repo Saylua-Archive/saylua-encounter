@@ -1,7 +1,3 @@
-import {combineReducers} from 'redux';
-
-import {game} from './game';
-
 export const UPDATE_PAGE = 'UPDATE_PAGE';
 export const UPDATE_OFFLINE = 'UPDATE_OFFLINE';
 export const OPEN_SNACKBAR = 'OPEN_SNACKBAR';
@@ -52,7 +48,7 @@ const INITIAL_STATE = {
   coins: 0,
 };
 
-const navigation = (state = INITIAL_STATE, action) => {
+export const navigation = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case UPDATE_PAGE:
       return {
@@ -78,8 +74,3 @@ const navigation = (state = INITIAL_STATE, action) => {
       return state;
   }
 };
-
-export default combineReducers({
-  navigation,
-  game,
-});

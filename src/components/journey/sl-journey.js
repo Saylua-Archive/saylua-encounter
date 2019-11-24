@@ -127,9 +127,9 @@ class SlJourney extends connect(store)(LitElement) {
 
   /** @override */
   stateChanged(state) {
-    this._currentEncounter = state.sayluaReducer.game.currentEncounter;
-    this._journey = state.sayluaReducer.game.journey;
-    this._gameState = state.sayluaReducer.game;
+    this._currentEncounter = state.game.currentEncounter;
+    this._journey = state.game.journey;
+    this._gameState = state.game;
   }
 
   /**
