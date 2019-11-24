@@ -4,6 +4,7 @@ export const GAME_FUNCTIONS = {
   /**
    * Alert a message.
    * @param {String} message - String to be alerted.
+   * @returns {undefined}
    */
   alert: (message) => {
     alert(message);
@@ -18,6 +19,7 @@ export const GAME_FUNCTIONS = {
   /**
    * Apply an Outcome.
    * @param {Array} outcome - An Array with an Outcome and its parameters.
+   * @returns {undefined}
    */
   dispatch: (outcome) => {
     const type = outcome[0];
@@ -31,6 +33,7 @@ export const GAME_FUNCTIONS = {
 
   /**
    * Dispatch addCoins.
+   * @returns {undefined}
    */
   addCoins: function(...args) {
     GAME_FUNCTIONS.dispatch(['addCoins', ...args]);
@@ -38,6 +41,7 @@ export const GAME_FUNCTIONS = {
 
   /**
    * Dispatch pushEncounter.
+   * @returns {undefined}
    */
   pushEncounter: function(...args) {
     GAME_FUNCTIONS.dispatch(['pushEncounter', ...args]);
@@ -45,6 +49,7 @@ export const GAME_FUNCTIONS = {
 
   /**
    * Dispatch pushRandom.
+   * @returns {undefined}
    */
   pushRandom: function(...args) {
     GAME_FUNCTIONS.dispatch(['pushRandom', ...args]);
