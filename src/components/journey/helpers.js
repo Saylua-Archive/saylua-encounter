@@ -1,5 +1,5 @@
 import {store} from '../../store';
-import REQUIREMENTS from './requirements';
+import {REQUIREMENTS} from './requirements';
 import {GAME_FUNCTIONS} from './gameFunctions';
 
 import {

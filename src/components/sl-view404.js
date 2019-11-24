@@ -3,6 +3,7 @@ import {html, LitElement} from 'lit-element';
 import {SharedStyles} from './shared-styles.js';
 
 class SlView404 extends LitElement {
+  /** @override */
   static get styles() {
     return [
       SharedStyles,

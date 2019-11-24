@@ -24,9 +24,7 @@ import './snack-bar.js';
  * Installs the router.
  */
 class SlApp extends connect(store)(LitElement) {
-  /**
-   * Defines LitElement properties.
-   */
+  /** @override */
   static get properties() {
     return {
       appTitle: {type: String},
@@ -37,9 +35,7 @@ class SlApp extends connect(store)(LitElement) {
     };
   }
 
-  /**
-   * Gets app styles.
-   */
+  /** @override */
   static get styles() {
     return [
       css`
@@ -85,10 +81,7 @@ class SlApp extends connect(store)(LitElement) {
     ];
   }
 
-  /**
-   * LitElement render function
-   * @return {Object}
-   */
+  /** @override */
   render() {
     return html`
       <header>
@@ -114,7 +107,7 @@ class SlApp extends connect(store)(LitElement) {
   /**
    * Choose which page to render.
    * @param {String} page - The page to render.
-   * @return {Object} - LitElement render data.
+   * @return {TemplateResult} - LitElement render data.
    */
   _renderPage(page) {
     switch (page) {
@@ -129,19 +122,14 @@ class SlApp extends connect(store)(LitElement) {
     }
   }
 
-  /**
-   * Start with routing.
-   */
+  /** @override */
   firstUpdated() {
     installRouter((location) =>
       store.dispatch(navigate(decodeURIComponent(location.pathname))));
     installOfflineWatcher((offline) => store.dispatch(updateOffline(offline)));
   }
 
-  /**
-   * Handle if _page changed.
-   * @param {Object} changedProps - Props that have been updated.
-   */
+  /** @override */
   updated(changedProps) {
     if (changedProps.has('_page')) {
       const pageTitle = this.appTitle + ' - ' + this._page;
@@ -152,10 +140,7 @@ class SlApp extends connect(store)(LitElement) {
     }
   }
 
-  /**
-   * Handle if Redux state changed.
-   * @param {Object} state - the new state.
-   */
+  /** @override */
   stateChanged(state) {
     this._page = state.sayluaReducer.navigation.page;
     this._offline = state.sayluaReducer.navigation.offline;
