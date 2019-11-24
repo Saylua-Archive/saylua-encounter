@@ -74,7 +74,7 @@ class SlJourney extends connect(store)(LitElement) {
   /**
    * Takes an Encounter and renders the relevant choice buttons.
    * @param {Array<Object>} choices - Array of choices.
-   * @return {TemplateResult} - Buttons as HTML with appropriate click handlers.
+   * @returns {TemplateResult} - Buttons as HTML with appropriate click handlers.
    */
   _renderChoiceButtons(choices) {
     if (!choices || !choices.length) {
@@ -100,7 +100,7 @@ class SlJourney extends connect(store)(LitElement) {
   /**
    * Generates an event handler for running a choice that a user selects.
    * @param {Number} choiceId - The ID of the selected choice.
-   * @return {Function} An event handler for running the selected choice.
+   * @returns {Function} An event handler for running the selected choice.
    */
   _selectChoice(choiceId) {
     const encounter = this.currentEncounter;
@@ -134,7 +134,7 @@ class SlJourney extends connect(store)(LitElement) {
 
   /**
    * Returns the current encounter Object.
-   * @return {Object} The encounter a user is currently viewing.
+   * @returns {Object} The encounter a user is currently viewing.
    */
   get currentEncounter() {
     return this._journey[this._currentEncounter];

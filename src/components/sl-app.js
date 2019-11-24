@@ -1,23 +1,23 @@
 import {LitElement, html, css} from 'lit-element';
-import {connect} from 'pwa-helpers/connect-mixin.js';
-import {installOfflineWatcher} from 'pwa-helpers/network.js';
-import {installRouter} from 'pwa-helpers/router.js';
-import {updateMetadata} from 'pwa-helpers/metadata.js';
+import {connect} from 'pwa-helpers/connect-mixin';
+import {installOfflineWatcher} from 'pwa-helpers/network';
+import {installRouter} from 'pwa-helpers/router';
+import {updateMetadata} from 'pwa-helpers/metadata';
 
-import './journey/sl-journey.js';
-import './dungeon/sl-dungeon.js';
-import './sl-view404.js';
+import './journey/sl-journey';
+import './dungeon/sl-dungeon';
+import './sl-view404';
 
 // This element is connected to the Redux store.
-import {store} from '../store.js';
+import {store} from '../store';
 
 // These are the actions needed by this element.
 import {
   navigate,
   updateOffline,
-} from '../reducers/sayluaReducer.js';
+} from '../reducers/sayluaReducer';
 
-import './snack-bar.js';
+import './snack-bar';
 
 /**
  * The root component.
@@ -107,7 +107,7 @@ class SlApp extends connect(store)(LitElement) {
   /**
    * Choose which page to render.
    * @param {String} page - The page to render.
-   * @return {TemplateResult} - LitElement render data.
+   * @returns {TemplateResult} - LitElement render data.
    */
   _renderPage(page) {
     switch (page) {

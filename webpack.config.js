@@ -2,9 +2,9 @@
 const path = require('path');
 
 module.exports = {
-  entry: './src/components/sl-app.js',
+  entry: './src/components/sl-app',
   output: {
-    filename: 'sl-app.js',
+    filename: 'sl-app',
     path: path.resolve(__dirname, 'dist'),
   },
   devServer: {

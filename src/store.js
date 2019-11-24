@@ -5,9 +5,9 @@ import {
   combineReducers,
 } from 'redux';
 import thunk from 'redux-thunk';
-import {lazyReducerEnhancer} from 'pwa-helpers/lazy-reducer-enhancer.js';
+import {lazyReducerEnhancer} from 'pwa-helpers/lazy-reducer-enhancer';
 
-import sayluaReducer from './reducers/sayluaReducer.js';
+import sayluaReducer from './reducers/sayluaReducer';
 
 const devCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
