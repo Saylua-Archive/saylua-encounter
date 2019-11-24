@@ -10,7 +10,7 @@ export function randomInt(max, min = 0) {
 
 /**
  * Return a random choice from an Array.
- * @param {Object} choices - choices to select from.
+ * @param {Array} choices - choices to select from.
  * @returns {Object} - the chosen element.
  */
 export function randomChoice(choices) {

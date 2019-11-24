@@ -8,6 +8,7 @@ import {
 
 /**
  * Advance to the next encounter.
+ * @returns {undefined}
  */
 export function advance() {
   store.dispatch(advanceEncounter());
@@ -28,6 +29,7 @@ export function checkRequirement(state, requirement) {
  * Apply any Outcomes (such as costs) implied by Requirements.
  * @param {Object} state - A Redux game state to mutate.
  * @param {Array} requirement - An Array with a Requirement and its parameters.
+ * @returns {undefined}
  */
 export function handleRequirement(state, requirement) {
   const {outcome} = REQUIREMENTS[requirement[0]];
