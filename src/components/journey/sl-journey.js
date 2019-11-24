@@ -98,7 +98,7 @@ class SlJourney extends connect(store)(LitElement) {
   }
 
   /**
-   * Generates an event handler for runnign a choice that a user selects.
+   * Generates an event handler for running a choice that a user selects.
    * @param {Number} choiceId - The ID of the selected choice.
    * @return {Function} An event handler for running the selected choice.
    */

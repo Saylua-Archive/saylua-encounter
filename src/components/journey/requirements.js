@@ -1,4 +1,4 @@
-const REQUIREMENTS = {
+export const REQUIREMENTS = {
   hasCoins: {
     test: (state, coins) => {
       if (state.coins >= coins) {
@@ -18,5 +18,3 @@ const REQUIREMENTS = {
       ['addCoins', -1 * coins],
   },
 };
-
-export default REQUIREMENTS;
