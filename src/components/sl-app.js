@@ -15,7 +15,7 @@ import {store} from '../store';
 import {
   navigate,
   updateOffline,
-} from '../reducers/sayluaReducer';
+} from '../reducers/navigation';
 
 import './snack-bar';
 
@@ -142,10 +142,10 @@ class SlApp extends connect(store)(LitElement) {
 
   /** @override */
   stateChanged(state) {
-    this._page = state.sayluaReducer.navigation.page;
-    this._offline = state.sayluaReducer.navigation.offline;
-    this._snackbarOpened = state.sayluaReducer.navigation.snackbarOpened;
-    this._coins = state.sayluaReducer.game.coins;
+    this._page = state.navigation.page;
+    this._offline = state.navigation.offline;
+    this._snackbarOpened = state.navigation.snackbarOpened;
+    this._coins = state.game.coins;
   }
 }
 
