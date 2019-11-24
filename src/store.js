@@ -7,7 +7,8 @@ import {
 import thunk from 'redux-thunk';
 import {lazyReducerEnhancer} from 'pwa-helpers/lazy-reducer-enhancer';
 
-import sayluaReducer from './reducers/sayluaReducer';
+import {game} from './reducers/game';
+import {navigation} from './reducers/navigation';
 
 const devCompose = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -19,5 +20,6 @@ export const store = createStore(
 );
 
 store.addReducers({
-  sayluaReducer,
+  game,
+  navigation,
 });
