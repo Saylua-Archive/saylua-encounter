@@ -11,7 +11,7 @@ export const GAME_FUNCTIONS = {
 
   /**
    * Add an arbitrary number of numbers.
-   * @return {Number} - The sum.
+   * @returns {Number} - The sum.
    */
   sum: (...args) => args.reduce((total, current) => total + current),
 
