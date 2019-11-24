@@ -1,6 +1,6 @@
 /* eslint-disable */
 import {html, LitElement} from 'lit-element';
-import {SharedStyles} from './shared-styles.js';
+import {SharedStyles} from './shared-styles';
 
 class SlView404 extends LitElement {
   /** @override */

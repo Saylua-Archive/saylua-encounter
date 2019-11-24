@@ -17,7 +17,7 @@ export function advance() {
  * Check if a set of requirements are met by a game Redux state.
  * @param {Object} state - A game Redux state to check.
  * @param {Array} requirement - An Array with a requirement and its parameters.
- * @return {Boolean} - Whether or not the state passes the requirement.
+ * @returns {Boolean} - Whether or not the state passes the requirement.
  */
 export function checkRequirement(state, requirement) {
   const parameters = requirement.slice(1);
@@ -40,7 +40,7 @@ export function handleRequirement(state, requirement) {
  * @param {Array} outcome - An Array with an Outcome and its parameters.
  * @param {Object} localState - An optional local game state.
  * @param {Object} globalState - An optional global game state.
- * @return {Object} - The non-array result of the game function(s).
+ * @returns {Object} - The non-array result of the game function(s).
  */
 export function evaluate(outcome, localState={}, globalState={}) {
   if (Array.isArray(outcome)) {
