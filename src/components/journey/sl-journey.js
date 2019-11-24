@@ -84,7 +84,7 @@ class SlJourney extends connect(store)(LitElement) {
         </button>`;
     }
     const availableChoices = choices.filter((choice) => {
-      // Conditionally hide choices based on whether the user meets 
+      // Conditionally hide choices based on whether the user meets
       // requirements.
       return !choice.requirement || checkRequirement(
           this._gameState, choice.requirement);
@@ -109,7 +109,7 @@ class SlJourney extends connect(store)(LitElement) {
     return (e) => {
       if (choice) {
         choice.requirement && handleRequirement(this._gameState,
-          choice.requirement);
+            choice.requirement);
         choice.outcome && evaluate(choice.outcome);
       }
       this.continue();
