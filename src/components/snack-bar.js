@@ -2,12 +2,14 @@
 import {LitElement, html, css} from 'lit-element';
 
 class SnackBar extends LitElement {
+  /** @override */
   static get properties() {
     return {
       active: {type: Boolean},
     };
   }
 
+  /** @override */
   static get styles() {
     return [
       css`
@@ -44,6 +46,7 @@ class SnackBar extends LitElement {
     ];
   }
 
+  /** @override */
   render() {
     return html`
       <slot></slot>

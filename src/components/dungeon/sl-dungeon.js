@@ -5,6 +5,7 @@ const MAP_TILE_WIDTH = 30;
 const MAP_TILE_HEIGHT = 30;
 
 class SlDungeon extends LitElement {
+  /** @override */
   static get properties() {
     return {
       tileGrid: {type: Array},
@@ -16,6 +17,7 @@ class SlDungeon extends LitElement {
     };
   }
 
+  /** @override */
   static get styles() {
     return [
       css`
@@ -56,6 +58,7 @@ class SlDungeon extends LitElement {
     ];
   }
 
+  /** @override */
   render() {
     const {rOrigin} = this;
     const {cOrigin} = this;
@@ -94,6 +97,7 @@ class SlDungeon extends LitElement {
     }
   }
 
+  /** @override */
   constructor() {
     super();
 
@@ -108,6 +112,7 @@ class SlDungeon extends LitElement {
     this.viewHeight = 9;
   }
 
+  /** @override */
   connectedCallback() {
     super.connectedCallback();
 
@@ -124,6 +129,7 @@ class SlDungeon extends LitElement {
     window.addEventListener('keydown', this._boundMoveCharacter);
   }
 
+  /** @override */
   disconnectedCallback() {
     super.disconnectedCallback();
 
