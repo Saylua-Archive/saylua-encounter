@@ -74,7 +74,7 @@ class SlJourney extends connect(store)(LitElement) {
   /**
    * Takes an Encounter and renders the relevant choice buttons.
    * @param {Array<Object>} choices - Array of choices.
-   * @returns {TemplateResult} - Buttons as HTML with appropriate click handlers.
+   * @returns {TemplateResult} - Buttons as HTML with click handlers.
    */
   _renderChoiceButtons(choices) {
     if (!choices || !choices.length) {
@@ -83,18 +83,25 @@ class SlJourney extends connect(store)(LitElement) {
           ${DEFAULT_CONTINUE_TEXT}
         </button>`;
     }
-    const availableChoices = choices.filter((choice) => {
-      // Conditionally hide choices based on whether the user meets
-      // requirements.
-      return !choice.requirement || checkRequirement(
-          this._gameState, choice.requirement);
-    });
+    const availableChoices = this._filterChoices(choices);
     return availableChoices.map((choice, id) =>
       html`
         <button @click=${this._selectChoice(id)}>
           ${choice.text || DEFAULT_CONTINUE_TEXT}
         </button>
       `);
+  }
+
+  /**
+   * Filter choices by requirements.
+   * @param {Array<Object>} choices - Array of choices.
+   * @returns {Array<Object>} - Array of available choices.
+   */
+  _filterChoices(choices) {
+    return choices.filter((choice) => {
+      return !choice.requirement || checkRequirement(
+          this._gameState, choice.requirement);
+    });
   }
 
   /**
@@ -105,7 +112,8 @@ class SlJourney extends connect(store)(LitElement) {
   _selectChoice(choiceId) {
     const encounter = this.currentEncounter;
     if (!encounter || !encounter.choices) return;
-    const choice = encounter.choices[choiceId];
+    const availableChoices = this._filterChoices(encounter.choices);
+    const choice = availableChoices[choiceId];
     return (e) => {
       if (choice) {
         choice.requirement && handleRequirement(this._gameState,
@@ -120,6 +128,7 @@ class SlJourney extends connect(store)(LitElement) {
    * Just calls advance for now.
    * May do more when clicks are more decoupled from Outcomes.
    * @param {Event} e - Click Event.
+   * @returns {undefined}
    */
   continue(e) {
     advance();
