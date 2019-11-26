@@ -62,7 +62,7 @@ function pushEncounterHelper(state, encounter, encounterState) {
       {
         index: findEncounter(journey, encounter),
         encounterState,
-      }
+      },
   );
   return {
     ...state,
