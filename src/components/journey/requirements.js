@@ -31,7 +31,7 @@ export const REQUIREMENTS = {
       return !value;
     },
   },
-  // Ensure all the values are true.
+  // Check if all the values are true.
   all: {
     test: (state, ...values) => {
       for (let i = 0; i < values.length; i++) {
@@ -40,6 +40,17 @@ export const REQUIREMENTS = {
         }
       }
       return true;
+    },
+  },
+  // Check if any the value is true.
+  any: {
+    test: (state, ...values) => {
+      for (let i = 0; i < values.length; i++) {
+        if (values[i] === true) {
+          return true;
+        }
+      }
+      return false;
     },
   },
 };
