@@ -1,0 +1,81 @@
+[
+  {
+    "text": "A mighty quest begins... You must retrieve the four ingredients."
+  },
+  {
+    "text": "Where would you like to go?",
+    "label": "trailhead",
+    "choices": [
+      {
+        "text": "The Mountains, to seek the Philosopher's Pasta.",
+        "requirement": ["not", ["checkToken", "pasta"]],
+        "next": "mountains"
+      },
+      {
+        "text": "The Beach, to seek the Mighty Meat.",
+        "requirement": ["not", ["checkToken", "meat"]],
+        "next": "beach"
+      },
+      {
+        "text": "The Swamp, to seek the Secret Sauce.",
+        "requirement": ["not", ["checkToken", "sauce"]],
+        "next": "swamp"
+      },
+      {
+        "text": "The Grasslands, to seek the Charming Cheese.",
+        "requirement": ["not", ["checkToken", "cheese"]],
+        "next": "grasslands"
+      },
+      {
+        "text": "The Volcano, to complete your quest!",
+        "requirement": ["all",
+          ["checkToken", "pasta"],
+          ["checkToken", "meat"],
+          ["checkToken", "sauce"],
+          ["checkToken", "cheese"]
+        ],
+        "next": "volcano"
+      }
+    ]
+  },
+  {
+    "label": "mountains",
+    "text": "You find the Philosopher's Pasta in the Majestic Mountains.",
+    "choices": [
+      {
+        "next": "trailhead",
+        "outcome": ["setToken", "pasta"]
+      }
+    ]
+  },
+  {
+    "label": "beach",
+    "text": "You find the Mighty Meat at the Beach.",
+    "choices": [
+      {
+        "next": "trailhead",
+        "outcome": ["setToken", "meat"]
+      }
+    ]
+  },
+  {
+    "label": "swamp",
+    "text": "You find the Secret Sauce deep within the Swamp.",
+    "choices": [
+      {
+        "next": "trailhead",
+        "outcome": ["setToken", "sauce"]
+      }
+    ]
+  },
+  {
+    "label": "grasslands",
+    "text": "While traveling through the Grasslands, someone offers you the Charming Cheese.",
+    "choices": [
+      {
+        "next": "trailhead",
+        "outcome": ["setToken", "cheese"]
+      }
+    ]
+  }
+]

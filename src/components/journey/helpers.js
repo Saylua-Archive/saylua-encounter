@@ -21,8 +21,16 @@ export function advance() {
  * @returns {Boolean} - Whether or not the state passes the requirement.
  */
 export function checkRequirement(state, requirement) {
+  const type = requirement[0];
   const parameters = requirement.slice(1);
-  return REQUIREMENTS[requirement[0]].test(state, ...parameters);
+  const reducedParameters = parameters.map((parameter) => {
+    if (Array.isArray(parameter)) {
+      return checkRequirement(state, parameter);
+    } else {
+      return parameter;
+    }
+  });
+  return REQUIREMENTS[type].test(state, ...reducedParameters);
 }
 
 /**
@@ -40,20 +48,12 @@ export function handleRequirement(state, requirement) {
 /**
  * Evaluate an Outcome. May trigger side effects or return a value.
  * @param {Array} outcome - An Array with an Outcome and its parameters.
- * @param {Object} localState - An optional local game state.
- * @param {Object} globalState - An optional global game state.
  * @returns {Object} - The non-array result of the game function(s).
  */
-export function evaluate(outcome, localState={}, globalState={}) {
+export function evaluate(outcome) {
   if (Array.isArray(outcome)) {
     const type = outcome[0];
     const parameters = outcome.slice(1);
-    if (localState[type]) {
-      return localState[type];
-    }
-    if (globalState[type]) {
-      return globalState[type];
-    }
     return evaluate(GAME_FUNCTIONS[type](...parameters));
   } else {
     return outcome;
