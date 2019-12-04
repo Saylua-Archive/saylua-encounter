@@ -2,16 +2,19 @@ export const ADD_COINS = 'addCoins';
 export const PUSH_ENCOUNTER = 'pushEncounter';
 export const PUSH_RANDOM = 'pushRandom';
 export const ADVANCE_ENCOUNTER = 'advanceEncounter';
+export const SET_TOKEN = 'setToken';
+export const CLEAR_TOKEN = 'clearToken';
 
-import fair from '../components/journey/paths/fair.json';
+import quest from '../components/journey/paths/quest.json';
 
 import {randomChoice} from '../utils/utils';
 
 const INITIAL_STATE = {
   coins: 0,
   sprites: [],
-  journey: fair,
+  journey: quest,
   encounterStack: [],
+  storyTokens: {},
   currentEncounter: 0,
   currentSprite: -1,
   inventory: {},
@@ -29,6 +32,20 @@ export const pushEncounter = (label, encounterState) => {
     type: PUSH_ENCOUNTER,
     label,
     encounterState,
+  };
+};
+
+export const setToken = (token) => {
+  return {
+    type: SET_TOKEN,
+    token,
+  };
+};
+
+export const clearToken = (token) => {
+  return {
+    type: CLEAR_TOKEN,
+    token,
   };
 };
 
@@ -85,13 +102,26 @@ function numsArray(obj) {
 }
 
 /**
+ * Update a story token object with the provided token and value.
+ * @param {Object} tokens - The existing tokens.
+ * @param {String} key - The key of the token to be updated.
+ * @param {Boolean} value - The new value to be set.
+ * @returns {Object} - The new tokens object.
+ */
+function tokenHelper(tokens, key, value) {
+  const newTokens = tokens;
+  newTokens[key] = value;
+  return newTokens;
+}
+
+/**
  * Gameplay reducer.
  * @param {Object} state - An optional current game Redux state.
  * @param {Object} action - Redux action.
  * @returns {Object} - The updated state.
  */
 export function game(state = INITIAL_STATE, action) {
-  const {encounterStack, currentEncounter, coins, journey} = state;
+  const {encounterStack, currentEncounter, coins, journey, storyTokens} = state;
 
   switch (action.type) {
     case ADD_COINS:
@@ -117,6 +147,11 @@ export function game(state = INITIAL_STATE, action) {
       return pushEncounterHelper(state, action[0], action[1]);
     case PUSH_RANDOM:
       return pushEncounterHelper(state, randomChoice(numsArray(action)));
+    case SET_TOKEN:
+      return {
+        ...state,
+        storyTokens: tokenHelper(storyTokens, action[0], true),
+      };
     default:
       return state;
   }
