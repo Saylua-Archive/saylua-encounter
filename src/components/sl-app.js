@@ -32,6 +32,9 @@ class SlApp extends connect(store)(LitElement) {
       _snackbarOpened: {type: Boolean},
       _offline: {type: Boolean},
       _coins: {type: Number},
+      _experience: {
+        type: Object,
+      },
     };
   }
 
@@ -92,7 +95,10 @@ class SlApp extends connect(store)(LitElement) {
 
       <aside>
         You have ${this._coins || 'no'} coins.
+        <br>
+        ${JSON.stringify(this._experience)}
       </aside>
+
 
       <main role="main">
         ${this._renderPage(this._page)}
@@ -146,6 +152,7 @@ class SlApp extends connect(store)(LitElement) {
     this._offline = state.navigation.offline;
     this._snackbarOpened = state.navigation.snackbarOpened;
     this._coins = state.game.coins;
+    this._experience = state.game.experience;
   }
 }
 

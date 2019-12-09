@@ -4,6 +4,7 @@ export const PUSH_RANDOM = 'pushRandom';
 export const ADVANCE_ENCOUNTER = 'advanceEncounter';
 export const SET_TOKEN = 'setToken';
 export const CLEAR_TOKEN = 'clearToken';
+export const ADD_EXPERIENCE = 'addExperience';
 
 import quest from '../components/journey/paths/quest.json';
 
@@ -15,6 +16,9 @@ const INITIAL_STATE = {
   journey: quest,
   encounterStack: [],
   storyTokens: {},
+  experience: {
+    energy: 0,
+  },
   currentEncounter: 0,
   currentSprite: -1,
   inventory: {},
@@ -46,6 +50,14 @@ export const clearToken = (token) => {
   return {
     type: CLEAR_TOKEN,
     token,
+  };
+};
+
+export const addExperience = (skill, amount) => {
+  return {
+    type: ADD_EXPERIENCE,
+    skill,
+    amount,
   };
 };
 
@@ -115,13 +127,27 @@ function tokenHelper(tokens, key, value) {
 }
 
 /**
+ * Update an experience object by adding to a skill.
+ * @param {Object} experience - The existing experience.
+ * @param {String} skill - The name of the skill to be updated.
+ * @param {Number} amount - The amount of experience to add.
+ * @returns {Object} - The new experience object.
+ */
+function experienceHelper(experience, skill, amount) {
+  const newExperience = {...experience};
+  newExperience[skill] = newExperience[skill] + amount;
+  return newExperience;
+}
+
+/**
  * Gameplay reducer.
  * @param {Object} state - An optional current game Redux state.
  * @param {Object} action - Redux action.
  * @returns {Object} - The updated state.
  */
 export function game(state = INITIAL_STATE, action) {
-  const {encounterStack, currentEncounter, coins, journey, storyTokens} = state;
+  const {encounterStack, currentEncounter, coins, journey,
+    storyTokens, experience} = state;
 
   switch (action.type) {
     case ADD_COINS:
@@ -151,6 +177,11 @@ export function game(state = INITIAL_STATE, action) {
       return {
         ...state,
         storyTokens: tokenHelper(storyTokens, action[0], true),
+      };
+    case ADD_EXPERIENCE:
+      return {
+        ...state,
+        experience: experienceHelper(experience, action[0], action[1]),
       };
     default:
       return state;

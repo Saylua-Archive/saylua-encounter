@@ -43,8 +43,43 @@
     "text": "You find the Philosopher's Pasta in the Majestic Mountains.",
     "choices": [
       {
+        "text": "Search the countryside for the fabled pasta...",
+        "next": "find pasta",
+        "failure": "can't find pasta",
+        "check": ["energy", 15]
+      },
+      {
+        "text": "Train in the pastatory arts.",
+        "next": "train pasta"
+      }
+    ]
+  },
+  {
+    "label": "train pasta",
+    "text": "You study the power of the pasta.",
+    "choices": [
+      {
+        "outcome": ["addExperience", "energy", 1],
+        "next": "mountains"
+      }
+    ]
+  },
+  {
+    "label": "find pasta",
+    "text": "After meditating upon the power of the cryptic carb, you finally discover it in a local grocery store.",
+    "choices": [
+      {
         "next": "trailhead",
         "outcome": ["setToken", "pasta"]
+      }
+    ]
+  },
+  {
+    "label": "can't find pasta",
+    "text": "You've heard legends of the pasta's power, but you cannot discern where it might rest...",
+    "choices": [
+      {
+        "next": "trailhead"
       }
     ]
   },

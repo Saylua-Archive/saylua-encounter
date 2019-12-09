@@ -78,4 +78,12 @@ export const GAME_FUNCTIONS = {
   clearToken: function(...args) {
     GAME_FUNCTIONS.dispatch(['clearToken', ...args]);
   },
+
+  /**
+   * Dispatch addExperience to add experience points to a skill.
+   * @returns {undefined}
+   */
+  addExperience: function(...args) {
+    GAME_FUNCTIONS.dispatch(['addExperience', ...args]);
+  },
 };
