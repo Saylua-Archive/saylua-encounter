@@ -40,13 +40,13 @@
   },
   {
     "label": "mountains",
-    "text": "You find the Philosopher's Pasta in the Majestic Mountains.",
+    "text": "You search for the Philosopher's Pasta in the Majestic Mountains.",
     "choices": [
       {
         "text": "Search the countryside for the fabled pasta...",
         "next": "find pasta",
         "failure": "can't find pasta",
-        "check": ["energy", 15]
+        "check": ["skillCheck", "energy", 15]
       },
       {
         "text": "Train in the pastatory arts.",

@@ -6,7 +6,7 @@ import {SharedStyles} from '../shared-styles';
 
 import {store} from '../../store';
 import {advance, checkRequirement,
-  handleRequirement, evaluate, skillCheck} from './helpers';
+  handleRequirement, evaluate} from './helpers';
 
 const DEFAULT_CONTINUE_TEXT = 'Continue...';
 
@@ -119,7 +119,7 @@ class SlJourney extends connect(store)(LitElement) {
         choice.requirement && handleRequirement(this._gameState,
             choice.requirement);
         choice.outcome && evaluate(choice.outcome);
-        if (choice.check && skillCheck(
+        if (choice.check && checkRequirement(
             this._gameState, choice.check) || !choice.failure) {
           choice.next && evaluate(['pushEncounter', choice.next]);
         } else {

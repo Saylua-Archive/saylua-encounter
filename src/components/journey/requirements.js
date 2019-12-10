@@ -1,3 +1,6 @@
+import {randomInt} from '../../utils/utils';
+import {calculateLevel} from './helpers';
+
 export const REQUIREMENTS = {
   // The state has at least (coins) coins.
   hasCoins: {
@@ -23,6 +26,13 @@ export const REQUIREMENTS = {
   checkToken: {
     test: (state, token) => {
       return state.storyTokens[token];
+    },
+  },
+  // Check a skill with a d20 roll. Warning: Probabilistic!!!
+  skillCheck: {
+    test: (state, skill, target) => {
+      const level = calculateLevel(state.experience[skill]);
+      return Math.floor(level) + randomInt(20, 1) > Math.floor(target);
     },
   },
   // Invert the provided value.

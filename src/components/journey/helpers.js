@@ -1,5 +1,4 @@
 import {store} from '../../store';
-import {randomInt} from '../../utils/utils';
 import {REQUIREMENTS} from './requirements';
 import {GAME_FUNCTIONS} from './gameFunctions';
 
@@ -68,17 +67,4 @@ export function evaluate(outcome) {
  */
 export function calculateLevel(experience) {
   return Math.sqrt(experience);
-}
-
-/**
-* Check if a set of requirements are met by a game Redux state.
-* @param {Object} state - A game Redux state to check.
-* @param {Array} check - An Array with a requirement and its parameters.
-* @returns {Boolean} - Whether or not the state passes the requirement.
-*/
-export function skillCheck(state, check) {
-  const skill = check[0];
-  const target = check[1];
-  const level = calculateLevel(state.experience[skill]);
-  return Math.floor(level) + randomInt(20, 1) > Math.floor(target);
 }
