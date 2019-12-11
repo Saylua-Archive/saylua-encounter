@@ -1,4 +1,6 @@
 import {store} from '../../store';
+import {addCoins, setToken, clearToken, pushEncounter,
+  pushRandom, addExperience} from '../../reducers/game';
 
 export const GAME_FUNCTIONS = {
   /**
@@ -14,76 +16,60 @@ export const GAME_FUNCTIONS = {
    * Add an arbitrary number of numbers.
    * @returns {Number} - The sum.
    */
-  sum: (...args) => args.reduce((total, current) => total + current),
+  sum: (...nums) => nums.reduce((total, current) => total + current),
 
   /**
-   * Set a variable in a journey's global state.
+   * Set a story token.
+   * @param {String} token - The key for the token to set.
    * @returns {undefined}
    */
-  set: function(...args) {
-    GAME_FUNCTIONS.dispatch(['set', ...args]);
+  setToken: function(token) {
+    store.dispatch(setToken(token));
   },
 
   /**
-   * Apply an Outcome.
-   * @param {Array} outcome - An Array with an Outcome and its parameters.
+   * Clear a story token.
+   * @param {String} token - The key for the token to clear.
    * @returns {undefined}
    */
-  dispatch: (outcome) => {
-    const type = outcome[0];
-    const parameters = outcome.slice(1);
-    const action = {
-      type,
-      ...parameters,
-    };
-    store.dispatch(action);
+  clearToken: function(token) {
+    store.dispatch(clearToken(token));
   },
 
   /**
    * Dispatch addCoins.
+   * @param {Number} coins - How many coins to add.
    * @returns {undefined}
    */
-  addCoins: function(...args) {
-    GAME_FUNCTIONS.dispatch(['addCoins', ...args]);
+  addCoins: function(coins) {
+    store.dispatch(addCoins(coins));
   },
 
   /**
    * Dispatch pushEncounter.
+   * @param {String} label - The encounter's identifying label.
+   * @param {Object} encounterState - Any state that the encounter needs.
    * @returns {undefined}
    */
-  pushEncounter: function(...args) {
-    GAME_FUNCTIONS.dispatch(['pushEncounter', ...args]);
+  pushEncounter: function(label, encounterState) {
+    store.dispatch(pushEncounter(label, encounterState));
   },
 
   /**
    * Dispatch pushRandom.
    * @returns {undefined}
    */
-  pushRandom: function(...args) {
-    GAME_FUNCTIONS.dispatch(['pushRandom', ...args]);
-  },
-
-  /**
-   * Dispatch setToken to set a story token.
-   * @returns {undefined}
-   */
-  setToken: function(...args) {
-    GAME_FUNCTIONS.dispatch(['setToken', ...args]);
-  },
-
-  /**
-   * Dispatch clearToken to clear a story token.
-   * @returns {undefined}
-   */
-  clearToken: function(...args) {
-    GAME_FUNCTIONS.dispatch(['clearToken', ...args]);
+  pushRandom: function(...encounters) {
+    store.dispatch(pushRandom(...encounters));
   },
 
   /**
    * Dispatch addExperience to add experience points to a skill.
+   * @param {String} skill - The skill to add the experience to.
+   * @param {Number} amount - How much to add.
    * @returns {undefined}
    */
-  addExperience: function(...args) {
-    GAME_FUNCTIONS.dispatch(['addExperience', ...args]);
+  addExperience: function(skill, amount) {
+    store.dispatch(addExperience(skill, amount));
   },
 };

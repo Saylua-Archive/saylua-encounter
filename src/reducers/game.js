@@ -39,6 +39,13 @@ export const pushEncounter = (label, encounterState) => {
   };
 };
 
+export const pushRandom = (encounters) => {
+  return {
+    type: PUSH_ENCOUNTER,
+    encounters,
+  };
+};
+
 export const setToken = (token) => {
   return {
     type: SET_TOKEN,
@@ -153,7 +160,7 @@ export function game(state = INITIAL_STATE, action) {
     case ADD_COINS:
       return {
         ...state,
-        coins: coins + action[0],
+        coins: coins + action.coins,
       };
     case ADVANCE_ENCOUNTER:
       if (encounterStack.length > 0) {
@@ -170,18 +177,18 @@ export function game(state = INITIAL_STATE, action) {
         currentEncounter: (currentEncounter + 1) % journey.length,
       };
     case PUSH_ENCOUNTER:
-      return pushEncounterHelper(state, action[0], action[1]);
+      return pushEncounterHelper(state, action.label, action.encounterState);
     case PUSH_RANDOM:
       return pushEncounterHelper(state, randomChoice(numsArray(action)));
     case SET_TOKEN:
       return {
         ...state,
-        storyTokens: tokenHelper(storyTokens, action[0], true),
+        storyTokens: tokenHelper(storyTokens, action.token, true),
       };
     case ADD_EXPERIENCE:
       return {
         ...state,
-        experience: experienceHelper(experience, action[0], action[1]),
+        experience: experienceHelper(experience, action.skill, action.amount),
       };
     default:
       return state;
