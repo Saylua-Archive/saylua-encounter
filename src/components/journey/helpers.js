@@ -59,3 +59,12 @@ export function evaluate(outcome) {
     return outcome;
   }
 }
+
+/**
+ * Calculate a skill level based on an experience total.
+ * @param {Number} experience - The experience total.
+ * @returns {Number} - The derrived level.
+ */
+export function calculateLevel(experience) {
+  return Math.sqrt(experience);
+}

@@ -119,7 +119,12 @@ class SlJourney extends connect(store)(LitElement) {
         choice.requirement && handleRequirement(this._gameState,
             choice.requirement);
         choice.outcome && evaluate(choice.outcome);
-        choice.next && evaluate(['pushEncounter', choice.next]);
+        if (choice.check && checkRequirement(
+            this._gameState, choice.check) || !choice.failure) {
+          choice.next && evaluate(['pushEncounter', choice.next]);
+        } else {
+          evaluate(['pushEncounter', choice.failure]);
+        }
       }
       this.continue();
     };
