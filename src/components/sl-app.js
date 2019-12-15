@@ -43,37 +43,42 @@ class SlApp extends connect(store)(LitElement) {
     return [
       css`
         :host {
-          --sl-header-height: 42px;
+          --sl-nav-height: 50px;
+          --sl-sidebar-width: 256px;
           display: block;
           min-width: 100%;
           min-height: 100%;
           display: grid;
           grid-template-areas:
-            'header header'
+            'sidebar nav'
             'sidebar main';
-          grid-template-rows: var(--sl-header-height) 1fr;
-          grid-template-columns: 256px 1fr;
+          grid-template-rows: var(--sl-nav-height) 1fr;
+          grid-template-columns: var(--sl-sidebar-width) 1fr;
         }
         aside {
           display: block;
           position: fixed;
           grid-area: sidebar;
-          width: 256px;
-          top: var(--sl-header-height);
-          margin-bottom: -var(--sl-header-height);
+          width: var(--sl-sidebar-width);
           z-index: 10;
           background: #d6e0df;
           height: 100%;
+          padding: 0.5em 8px;
+          box-sizing: border-box;
         }
-        header {
+        nav {
           display: block;
           position: fixed;
+          grid-area: nav;
+          margin-left: var(--sl-sidebar-width);
+          margin-right: -var(--sl-sidebar-width);
           width: 100%;
-          grid-area: header;
-          height: var(--sl-header-height);
+          height: var(--sl-nav-height);
           background: white;
           box-sizing: border-box;
           z-index: 50;
+          padding: 0.5em 8px;
+          box-sizing: border-box;
         }
         main {
           box-sizing: border-box;
@@ -87,18 +92,19 @@ class SlApp extends connect(store)(LitElement) {
   /** @override */
   render() {
     return html`
-      <header>
-        <a href="/home">Home Sweet Home</a>
-        <a href="/cave">The Caves</a>
-        <a href="/view3">View 3</a>
-      </header>
-
       <aside>
         You have ${this._coins || 'no'} coins.
         <br>
         ${JSON.stringify(this._experience)}
       </aside>
 
+      <nav>
+        <a href="/">Home</a>
+        <a href="/town">Town</a>
+        <a href="/wilderness">Wilderness</a>
+        <a href="/cave">The Caves</a>
+        <a href="/view3">View 3</a>
+      </nav>
 
       <main role="main">
         ${this._renderPage(this._page)}
@@ -118,7 +124,11 @@ class SlApp extends connect(store)(LitElement) {
   _renderPage(page) {
     switch (page) {
       case 'home':
-        return html`<sl-journey></sl-journey>`;
+        return html`<sl-journey journeyName="quest.json"></sl-journey>`;
+      case 'town':
+        return html`<sl-journey journeyName="fair.json"></sl-journey`;
+      case 'wilderness':
+        return html`<sl-journey journeyName="wilderness.json"></sl-journey>`;
       case 'cave':
         return html`<sl-dungeon></sl-dungeon>`;
       case 'view3':
