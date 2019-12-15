@@ -5,6 +5,7 @@ import {connect} from 'pwa-helpers/connect-mixin';
 import {SharedStyles} from '../shared-styles';
 
 import {store} from '../../store';
+import {loadJourney} from '../../reducers/game';
 import {advance, checkRequirement,
   handleRequirement, evaluate} from './helpers';
 
@@ -18,6 +19,7 @@ class SlJourney extends connect(store)(LitElement) {
   /** @override */
   static get properties() {
     return {
+      journeyName: {type: String},
       _currentEncounter: {type: Number},
       _journey: {type: Object},
       _gameState: {type: Object},
@@ -145,6 +147,13 @@ class SlJourney extends connect(store)(LitElement) {
     this._currentEncounter = state.game.currentEncounter;
     this._journey = state.game.journey;
     this._gameState = state.game;
+  }
+
+  /** @override */
+  updated(changedProperties) {
+    if (changedProperties.has('journeyName')) {
+      store.dispatch(loadJourney(this.journeyName));
+    }
   }
 
   /**

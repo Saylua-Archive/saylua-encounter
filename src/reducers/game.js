@@ -5,15 +5,14 @@ export const ADVANCE_ENCOUNTER = 'advanceEncounter';
 export const SET_TOKEN = 'setToken';
 export const CLEAR_TOKEN = 'clearToken';
 export const ADD_EXPERIENCE = 'addExperience';
-
-import quest from '../components/journey/paths/quest.json';
+export const LOAD_JOURNEY = 'loadJourney';
 
 import {randomChoice} from '../utils/utils';
 
 const INITIAL_STATE = {
   coins: 0,
   sprites: [],
-  journey: quest,
+  journey: [],
   encounterStack: [],
   storyTokens: {},
   experience: {
@@ -22,6 +21,14 @@ const INITIAL_STATE = {
   currentEncounter: 0,
   currentSprite: -1,
   inventory: {},
+};
+
+export const loadJourney = (journeyName) => async (dispatch) => {
+  const journeyModule = await import('../journeys/' + journeyName);
+  dispatch({
+    type: LOAD_JOURNEY,
+    journey: journeyModule.default,
+  });
 };
 
 export const addCoins = (coins) => {
@@ -189,6 +196,13 @@ export function game(state = INITIAL_STATE, action) {
       return {
         ...state,
         experience: experienceHelper(experience, action.skill, action.amount),
+      };
+    case LOAD_JOURNEY:
+      return {
+        ...state,
+        journey: action.journey,
+        currentEncounter: 0,
+        encounterStack: [],
       };
     default:
       return state;
