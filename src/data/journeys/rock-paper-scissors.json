@@ -1,0 +1,69 @@
+[
+  {
+    "text": "Let's play a game with these items!"
+  },
+  {
+    "text": "Rock, paper or scissors?",
+    "choices": [
+      {
+        "text": "Rock",
+        "next": "win against scissors",
+        "failure": "lose",
+        "check": ["randomCheck", 0.33]
+      },
+      {
+        "text": "Paper",
+        "next": "win against rock",
+        "failure": "lose",
+        "check": ["randomCheck", 0.33]
+      },
+      {
+        "text": "Scissors",
+        "next": "win against paper",
+        "failure": "lose",
+        "check": ["randomCheck", 0.33]
+      }
+    ]
+  },
+  {
+    "label": "win against scissors",
+    "text": "Your opponent picked scissors. You win 200 coins!",
+    "choices": [
+      {
+        "text": "Take the coins",
+        "outcome": ["addCoins", 200],
+        "next": "finish"
+      }
+    ]
+  },
+  {
+    "label": "win against rock",
+    "text": "Your opponent picked rock. You win 200 coins!",
+    "choices": [
+      {
+        "text": "Take the coins",
+        "outcome": ["addCoins", 200],
+        "next": "finish"
+      }
+    ]
+  },
+  {
+    "label": "win against paper",
+    "text": "Your opponent picked paper. You win 200 coins!",
+    "choices": [
+      {
+        "text": "Take the coins",
+        "outcome": ["addCoins", 200],
+        "next": "finish"
+      }
+    ]
+  },
+  {
+    "label": "lose",
+    "text": "Sorry, you lose."
+  },
+  {
+    "label": "finish",
+    "text": "Great game!"
+  }
+]

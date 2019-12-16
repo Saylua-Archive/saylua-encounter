@@ -6,6 +6,7 @@ import {updateMetadata} from 'pwa-helpers/metadata';
 
 import './journey/sl-journey';
 import './dungeon/sl-dungeon';
+import './sl-inventory/sl-inventory';
 import './sl-view404';
 
 // This element is connected to the Redux store.
@@ -96,6 +97,12 @@ class SlApp extends connect(store)(LitElement) {
         You have ${this._coins || 'no'} coins.
         <br>
         ${JSON.stringify(this._experience)}
+        <br>
+        <a href="/inventory">Inventory</a>
+        <br>
+        <a href="/den">Den</a>
+        <br>
+        <a href="/quests">Quests</a>
       </aside>
 
       <nav>
@@ -103,7 +110,6 @@ class SlApp extends connect(store)(LitElement) {
         <a href="/town">Town</a>
         <a href="/wilderness">Wilderness</a>
         <a href="/cave">The Caves</a>
-        <a href="/view3">View 3</a>
       </nav>
 
       <main role="main">
@@ -131,8 +137,12 @@ class SlApp extends connect(store)(LitElement) {
         return html`<sl-journey journeyName="wilderness.json"></sl-journey>`;
       case 'cave':
         return html`<sl-dungeon></sl-dungeon>`;
-      case 'view3':
-        return html`view 3`;
+      case 'inventory':
+        return html`<sl-inventory></sl-inventory>`;
+      case 'den':
+        return html`A lovely den`;
+      case 'quests':
+        return html`The things you're a doing`;
       default:
         return html`<sl-view404></sl-view404>`;
     }

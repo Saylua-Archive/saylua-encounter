@@ -1,3 +1,7 @@
+import {createSelector} from 'reselect';
+import {randomChoice} from '../utils/utils';
+import itemData from '../data/items.json';
+
 export const ADD_COINS = 'addCoins';
 export const PUSH_ENCOUNTER = 'pushEncounter';
 export const PUSH_RANDOM = 'pushRandom';
@@ -7,7 +11,23 @@ export const CLEAR_TOKEN = 'clearToken';
 export const ADD_EXPERIENCE = 'addExperience';
 export const LOAD_JOURNEY = 'loadJourney';
 
-import {randomChoice} from '../utils/utils';
+export const getGameState = (state) => state.game;
+const _getItems = createSelector(getGameState, (game) => game.items);
+const _getInventory = createSelector(getGameState, (game) => game.inventory);
+export const getInventory = createSelector(_getItems, _getInventory, 
+  (itemData, inventory) => {
+    return inventory.map((itemEntry) => ({
+      item: itemData[itemEntry.id],
+      count: itemEntry.count,
+    }));
+});
+
+const normalizeItemData = (itemData) => {
+  return itemData.reduce((object, item) => {
+    object[item.id] = item;
+    return object;
+  }, {});
+};
 
 const INITIAL_STATE = {
   coins: 0,
@@ -20,11 +40,19 @@ const INITIAL_STATE = {
   },
   currentEncounter: 0,
   currentSprite: -1,
-  inventory: {},
+  inventory: [
+    {id: 1, count: 5},
+    {id: 2, count: 5},
+    {id: 3, count: 5},
+    {id: 4, count: 5},
+    {id: 5, count: 5},
+  ],
+  // TODO: Create Redux action to populate item data.
+  items: normalizeItemData(itemData),
 };
 
 export const loadJourney = (journeyName) => async (dispatch) => {
-  const journeyModule = await import('../journeys/' + journeyName);
+  const journeyModule = await import('../data/journeys/' + journeyName);
   dispatch({
     type: LOAD_JOURNEY,
     journey: journeyModule.default,
