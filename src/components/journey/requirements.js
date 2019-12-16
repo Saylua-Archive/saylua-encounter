@@ -35,6 +35,12 @@ export const REQUIREMENTS = {
       return Math.floor(level) + randomInt(20, 1) > Math.floor(target);
     },
   },
+  // Has a specified percentage chance of passing.
+  randomCheck: {
+    test: (_state, chance) => {
+      return Math.random() <= chance;
+    },
+  },
   // Invert the provided value.
   not: {
     test: (state, value) => {

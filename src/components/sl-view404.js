@@ -1,7 +1,9 @@
-/* eslint-disable */
 import {html, LitElement} from 'lit-element';
 import {SharedStyles} from './shared-styles';
 
+/**
+ * 404 page component.
+ */
 class SlView404 extends LitElement {
   /** @override */
   static get styles() {
@@ -10,6 +12,7 @@ class SlView404 extends LitElement {
     ];
   }
 
+  /** @override */
   render() {
     return html`
       <section>

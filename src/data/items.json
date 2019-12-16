@@ -1,0 +1,33 @@
+[
+  {
+    "id": 1,
+    "name": "Lasagna",
+    "description": "Tasty lasagna from the fair",
+    "sellPrice": 100
+  },
+  {
+    "id": 2,
+    "name": "Glowing Fruit",
+    "description": "Rare Luarian glowing fruit",
+    "sellPrice": 500
+  },
+  {
+    "id": 3,
+    "name": "Rock",
+    "description": "Just a rock",
+    "sellPrice": 5
+  },
+  {
+    "id": 4,
+    "name": "Rock, paper, scissors",
+    "description": "An odd assortment of items. Maybe we can play with this.",
+    "sellPrice": 100,
+    "journey": "rock-paper-scissors.json"
+  },
+  {
+    "id": 5,
+    "name": "Paperclip",
+    "description": "Clips papers together",
+    "sellPrice": 20
+  }
+]
