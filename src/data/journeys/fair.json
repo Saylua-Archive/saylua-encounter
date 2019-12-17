@@ -54,7 +54,8 @@
     "choices": [
       {
         "text": "Buy a plate of lasagna (15 coins).",
-        "requirement": ["takeCoins", 15]
+        "requirement": ["takeCoins", 15],
+        "outcome": ["addItems", 1]
       },
       {
         "text": "Walk away in shame.",

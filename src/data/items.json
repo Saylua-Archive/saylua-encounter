@@ -29,5 +29,11 @@
     "name": "Paperclip",
     "description": "Clips papers together",
     "sellPrice": 20
+  },
+  {
+    "id": 6,
+    "name": "Scissors",
+    "description": "Undoes paper",
+    "sellPrice": 50
   }
 ]

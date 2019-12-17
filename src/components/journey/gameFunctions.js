@@ -1,5 +1,5 @@
 import {store} from '../../store';
-import {addCoins, setToken, clearToken, pushEncounter,
+import {addItems, addCoins, setToken, clearToken, pushEncounter,
   pushRandom, addExperience} from '../../reducers/game';
 
 export const GAME_FUNCTIONS = {
@@ -34,6 +34,16 @@ export const GAME_FUNCTIONS = {
    */
   clearToken: function(token) {
     store.dispatch(clearToken(token));
+  },
+
+  /**
+   * Dispatch addItems.
+   * @param {number} id - The item id.
+   * @param {number} count - The number you gain.
+   * @returns {undefined}
+   */
+  addItems: function(id, count = 1) {
+    store.dispatch(addItems(id, count));
   },
 
   /**

@@ -27,33 +27,33 @@
   },
   {
     "label": "win against scissors",
-    "text": "Your opponent picked scissors. You win 200 coins!",
+    "text": "Your opponent picked scissors. You win scissors!",
     "choices": [
       {
-        "text": "Take the coins",
-        "outcome": ["addCoins", 200],
+        "text": "Take the scissors",
+        "outcome": ["addItems", 6],
         "next": "finish"
       }
     ]
   },
   {
     "label": "win against rock",
-    "text": "Your opponent picked rock. You win 200 coins!",
+    "text": "Your opponent picked rock. You win a rock!",
     "choices": [
       {
-        "text": "Take the coins",
-        "outcome": ["addCoins", 200],
+        "text": "Take the rock",
+        "outcome": ["addItems", 3],
         "next": "finish"
       }
     ]
   },
   {
     "label": "win against paper",
-    "text": "Your opponent picked paper. You win 200 coins!",
+    "text": "Your opponent picked paper. You win paper!",
     "choices": [
       {
-        "text": "Take the coins",
-        "outcome": ["addCoins", 200],
+        "text": "Take the paperclip",
+        "outcome": ["addItems", 5],
         "next": "finish"
       }
     ]
