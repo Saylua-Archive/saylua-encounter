@@ -2,6 +2,7 @@ import {createSelector} from 'reselect';
 import {randomChoice} from '../utils/utils';
 import itemData from '../data/items.json';
 
+export const ADD_ITEMS = 'addItems';
 export const ADD_COINS = 'addCoins';
 export const PUSH_ENCOUNTER = 'pushEncounter';
 export const PUSH_RANDOM = 'pushRandom';
@@ -13,12 +14,13 @@ export const LOAD_JOURNEY = 'loadJourney';
 
 export const getGameState = (state) => state.game;
 const _getItems = createSelector(getGameState, (game) => game.items);
+const getItemById = createSelector(_getItems, (itemData) => (id) => itemData[id])
 const _getInventory = createSelector(getGameState, (game) => game.inventory);
-export const getInventory = createSelector(_getItems, _getInventory, 
-  (itemData, inventory) => {
-    return inventory.map((itemEntry) => ({
-      item: itemData[itemEntry.id],
-      count: itemEntry.count,
+export const getInventory = createSelector(getItemById, _getInventory, 
+  (getItemById, inventory) => {
+    return Object.entries(inventory).map(([id, count]) => ({
+      item: getItemById(id),
+      count: count,
     }));
 });
 
@@ -40,13 +42,13 @@ const INITIAL_STATE = {
   },
   currentEncounter: 0,
   currentSprite: -1,
-  inventory: [
-    {id: 1, count: 5},
-    {id: 2, count: 5},
-    {id: 3, count: 5},
-    {id: 4, count: 5},
-    {id: 5, count: 5},
-  ],
+  inventory: {
+    1: 5,
+    2: 5,
+    3: 5,
+    4: 5,
+    5: 5,
+  },
   // TODO: Create Redux action to populate item data.
   items: normalizeItemData(itemData),
 };
@@ -57,6 +59,14 @@ export const loadJourney = (journeyName) => async (dispatch) => {
     type: LOAD_JOURNEY,
     journey: journeyModule.default,
   });
+};
+
+export const addItems = (id, count = 1) => {
+  return {
+    type: ADD_ITEMS,
+    id: id,
+    count,
+  };
 };
 
 export const addCoins = (coins) => {
@@ -189,9 +199,17 @@ function experienceHelper(experience, skill, amount) {
  */
 export function game(state = INITIAL_STATE, action) {
   const {encounterStack, currentEncounter, coins, journey,
-    storyTokens, experience} = state;
+    storyTokens, experience, inventory} = state;
 
   switch (action.type) {
+    case ADD_ITEMS:
+      return {
+        ...state,
+        inventory: {
+          ...inventory,
+          [action.id]: (inventory[action.id] || 0) + action.count,
+        },
+      };
     case ADD_COINS:
       return {
         ...state,
