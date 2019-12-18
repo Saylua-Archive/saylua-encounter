@@ -1,6 +1,7 @@
 import {createSelector} from 'reselect';
 import {randomChoice} from '../utils/utils';
 import itemData from '../data/items.json';
+import speciesData from '../data/species.json';
 
 export const ADD_ITEMS = 'addItems';
 export const ADD_COINS = 'addCoins';
@@ -31,9 +32,25 @@ const normalizeItemData = (itemData) => {
   }, {});
 };
 
+const normalizeSpeciesData = (speciesData) => {
+  return speciesData.reduce((object, species) => {
+    object[species.id] = species;
+    return object;
+  }, {});
+};
+
 const INITIAL_STATE = {
   coins: 0,
-  sprites: [],
+  spritesInDen: [1],
+  spritesById: {
+    1: {
+      id: 1,
+      soulName: 'kimberly',
+      name: 'Kimberly',
+      speciesId: 3,
+      coatId: 5,
+    },
+  },
   journey: [],
   encounterStack: [],
   storyTokens: {},
@@ -41,7 +58,7 @@ const INITIAL_STATE = {
     energy: 0,
   },
   currentEncounter: 0,
-  currentSprite: -1,
+  currentSpriteId: 1,
   inventory: {
     1: 5,
     2: 5,
@@ -51,6 +68,7 @@ const INITIAL_STATE = {
   },
   // TODO: Create Redux action to populate item data.
   items: normalizeItemData(itemData),
+  species: normalizeSpeciesData(speciesData),
 };
 
 export const loadJourney = (journeyName) => async (dispatch) => {
