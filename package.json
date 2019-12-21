@@ -8,7 +8,7 @@
   "scripts": {
     "watch": "webpack --watch",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --open",
+    "start": "webpack-dev-server --open --history-api-fallback",
     "lint": "eslint src",
     "test": ""
   },

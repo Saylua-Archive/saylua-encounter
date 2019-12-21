@@ -1,5 +1,5 @@
 import {createSelector} from 'reselect';
-import {randomChoice} from '../utils/utils';
+import {randomChoice, canonize} from '../utils/utils';
 import itemData from '../data/items.json';
 import speciesData from '../data/species.json';
 
@@ -13,17 +13,54 @@ export const CLEAR_TOKEN = 'clearToken';
 export const ADD_EXPERIENCE = 'addExperience';
 export const LOAD_JOURNEY = 'loadJourney';
 
-export const getGameState = (state) => state.game;
-const _getItems = createSelector(getGameState, (game) => game.items);
-const getItemById = createSelector(_getItems, (itemData) => (id) => itemData[id])
-const _getInventory = createSelector(getGameState, (game) => game.inventory);
-export const getInventory = createSelector(getItemById, _getInventory, 
-  (getItemById, inventory) => {
-    return Object.entries(inventory).map(([id, count]) => ({
+export const gameState = (state) => state.game;
+const _itemData = createSelector(gameState, (game) => game.items);
+const getItemById = createSelector(_itemData, (itemData) => (id) => itemData[id])
+const _inventory = createSelector(gameState, (game) => game.inventory);
+export const inventory = createSelector(getItemById, _inventory, 
+  (getItemById, itemIds) => {
+    return Object.entries(itemIds).map(([id, count]) => ({
       item: getItemById(id),
       count: count,
     }));
 });
+
+const _speciesData = createSelector(gameState, (game) => game.species);
+export const getSpeciesById = createSelector(_speciesData, (speciesData) => 
+  (id) => speciesData[id]);
+
+const _spriteData = createSelector(gameState, (game) => game.spritesById);
+const _spriteViewData = createSelector(_spriteData, getSpeciesById, 
+  (spriteData, getSpeciesById) => {
+    const viewData = {};
+    Object.entries(spriteData).forEach(([id, sprite]) => {
+      const species = getSpeciesById(sprite.speciesId);
+
+      // TODO: Consider optimizing by adding a key lookup for coats.
+      const coat = species.coats.find((coat) => coat.id === sprite.coatId);
+      if (!coat) {
+        throw new Error('Sprite has invalid coat.');
+      }
+      const coatName = coat.name;
+  
+      const imageUrl = `/images/sprites/${canonize(species.name)}/${
+        canonize(coatName)}.png`;
+      viewData[id] = {
+        ...sprite,
+        species,
+        coatName,
+        imageUrl,
+      };
+    });
+    return viewData;
+  });
+const getSpriteById = createSelector(_spriteViewData, (spriteViewData) => 
+  (id) => spriteViewData[id]);
+
+const _spritesInDen = createSelector(gameState, 
+  (game) => game.spritesInDen);
+export const spritesInDen = createSelector(getSpriteById, _spritesInDen,
+  (getSpriteById, spriteIds) => spriteIds.map((id) => getSpriteById(id)));
 
 const normalizeItemData = (itemData) => {
   return itemData.reduce((object, item) => {
@@ -41,12 +78,19 @@ const normalizeSpeciesData = (speciesData) => {
 
 const INITIAL_STATE = {
   coins: 0,
-  spritesInDen: [1],
+  spritesInDen: [1, 2],
   spritesById: {
     1: {
       id: 1,
       soulName: 'kimberly',
       name: 'Kimberly',
+      speciesId: 2,
+      coatId: 5,
+    },
+    2: {
+      id: 1,
+      soulName: 'nigel',
+      name: 'Nigel',
       speciesId: 3,
       coatId: 5,
     },

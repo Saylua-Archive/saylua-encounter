@@ -1,9 +1,8 @@
-
 import {html, css, LitElement} from 'lit-element';
 import {connect} from 'pwa-helpers/connect-mixin';
 
 import {store} from '../../store';
-import {getInventory, addItems, addCoins} from '../../reducers/game';
+import {inventory, addItems, addCoins} from '../../reducers/game';
 import '../journey/sl-journey';
 import {seededRandomInt} from '../../utils/utils';
 
@@ -83,7 +82,7 @@ class SlInventory extends connect(store)(LitElement) {
 
   /** @override */
   stateChanged(state) {
-    this._inventory = getInventory(state);
+    this._inventory = inventory(state);
   }
 
   /**

@@ -38,3 +38,13 @@ export function seededRandomInt(seed, max, min = 0) {
   return Math.floor((seededRandom(seed) * ((max - min) + 1))
     + min);
 }
+
+/**
+ * Turns a name for something into a canonical name format:
+ * all lowercase, with non-word characters turned into underscores.
+ * @param {string} name The name to convert.
+ * @returns {string} The resulting canonized name.
+ */
+export function canonize(name = '') {
+  return name.toLowerCase().replace(/\W/g, '_');
+}
