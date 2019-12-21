@@ -7,6 +7,7 @@ import {updateMetadata} from 'pwa-helpers/metadata';
 import './journey/sl-journey';
 import './dungeon/sl-dungeon';
 import './sl-inventory/sl-inventory';
+import './sl-den/sl-den';
 import './sl-view404';
 
 // This element is connected to the Redux store.
@@ -140,7 +141,7 @@ class SlApp extends connect(store)(LitElement) {
       case 'inventory':
         return html`<sl-inventory></sl-inventory>`;
       case 'den':
-        return html`A lovely den`;
+        return html`<sl-den></sl-den>`;
       case 'quests':
         return html`The things you're a doing`;
       default:
