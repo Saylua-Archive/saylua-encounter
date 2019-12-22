@@ -3,7 +3,7 @@ import {connect} from 'pwa-helpers/connect-mixin';
 
 import {store} from '../../store';
 
-import {spritesInDen} from '../../reducers/game';
+import {spritesInDen, accompanySprite} from '../../reducers/game';
 
 /**
  * A sprite den.
@@ -32,6 +32,9 @@ class SlDen extends connect(store)(LitElement) {
         padding: 0.5em 8px;
         background: white;
         text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       .sprite img {
         width: 160px;
@@ -49,6 +52,9 @@ class SlDen extends connect(store)(LitElement) {
           <div class="sprite">
             <img src=${sprite.imageUrl} title=${sprite.name} />
             ${sprite.name}
+            <button 
+              @click=${this._accompanySprite.bind(this, sprite.id)}
+            >Accompany</button>
           </div>
         `)}
       </section>
@@ -58,6 +64,15 @@ class SlDen extends connect(store)(LitElement) {
   /** @override */
   stateChanged(state) {
     this._sprites = spritesInDen(state);
+  }
+
+  /**
+   * Accompany a sprite.
+   * @param {number} spriteId The id of the sprite.
+   * @returns {undefined}
+   */
+  _accompanySprite(spriteId) {
+    store.dispatch(accompanySprite(spriteId));
   }
 }
 
