@@ -12,6 +12,7 @@ import './sl-view404';
 
 // This element is connected to the Redux store.
 import {store} from '../store';
+import {currentSprite} from '../reducers/game';
 
 // These are the actions needed by this element.
 import {
@@ -37,6 +38,7 @@ class SlApp extends connect(store)(LitElement) {
       _experience: {
         type: Object,
       },
+      _currentSprite: {type: Object},
     };
   }
 
@@ -56,6 +58,9 @@ class SlApp extends connect(store)(LitElement) {
             'sidebar main';
           grid-template-rows: var(--sl-nav-height) 1fr;
           grid-template-columns: var(--sl-sidebar-width) 1fr;
+        }
+        img {
+          max-width: 100%;
         }
         aside {
           display: block;
@@ -93,9 +98,44 @@ class SlApp extends connect(store)(LitElement) {
 
   /** @override */
   render() {
+    const sprite = this._currentSprite;
+    if (this._page === 'start') {
+      return html`
+        <p>The sky is bright.</p>
+
+        <p>You've lived in Sayleus your whole life.</p>
+
+        <p>But there comes a time when life must change.</p>
+
+        <p>You're not sure why, but you know you wanted this.</p>
+        
+        <p>The train rocks up and down as the wheels turn.</p>
+
+        <p>500 miles away from home.</p>
+
+        <p>Anxiety is a funny thing. Excitement and fear are sometimes 
+          hard to tell apart.</p>
+
+        <p>Your hands shake. You know the city will have so many more 
+          oportunities than your hometown.</p>
+
+        <p>But won't it be lonely to go somewhere so far away? 
+          Without friends?</p>
+
+        <p>It's too late to turn back now.</p>
+
+        <p>You hope that the city is like you wished.</p>
+
+        <p>And that maybe... One day... If the legends are as they say, 
+          your wishes could come true.</p>
+      `;
+    }
     return html`
       <aside>
-        You have ${this._coins || 'no'} coins.
+        <img src=${sprite.imageUrl} title=${sprite.name} />
+        <p>Your companion is ${sprite.name}</p>
+  
+        <p>You have ${this._coins || 'no'} coins.</p>
         <br>
         ${JSON.stringify(this._experience)}
         <br>
@@ -174,6 +214,7 @@ class SlApp extends connect(store)(LitElement) {
     this._snackbarOpened = state.navigation.snackbarOpened;
     this._coins = state.game.coins;
     this._experience = state.game.experience;
+    this._currentSprite = currentSprite(state);
   }
 }
 

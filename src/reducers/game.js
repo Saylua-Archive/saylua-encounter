@@ -3,6 +3,7 @@ import {randomChoice, canonize} from '../utils/utils';
 import itemData from '../data/items.json';
 import speciesData from '../data/species.json';
 
+export const ACCOMPANY_SPRITE = 'accompanySprite';
 export const ADD_ITEMS = 'addItems';
 export const ADD_COINS = 'addCoins';
 export const PUSH_ENCOUNTER = 'pushEncounter';
@@ -13,6 +14,7 @@ export const CLEAR_TOKEN = 'clearToken';
 export const ADD_EXPERIENCE = 'addExperience';
 export const LOAD_JOURNEY = 'loadJourney';
 
+// Selectors
 export const gameState = (state) => state.game;
 const _itemData = createSelector(gameState, (game) => game.items);
 const getItemById = createSelector(_itemData, (itemData) => (id) => itemData[id])
@@ -62,6 +64,11 @@ const _spritesInDen = createSelector(gameState,
 export const spritesInDen = createSelector(getSpriteById, _spritesInDen,
   (getSpriteById, spriteIds) => spriteIds.map((id) => getSpriteById(id)));
 
+const _currentSpriteId = createSelector(gameState, (game) => game.currentSpriteId);
+export const currentSprite = createSelector(getSpriteById, _currentSpriteId, 
+  (getSpriteById, id) => getSpriteById(id));
+
+// Reducers
 const normalizeItemData = (itemData) => {
   return itemData.reduce((object, item) => {
     object[item.id] = item;
@@ -88,7 +95,7 @@ const INITIAL_STATE = {
       coatId: 5,
     },
     2: {
-      id: 1,
+      id: 2,
       soulName: 'nigel',
       name: 'Nigel',
       speciesId: 3,
@@ -115,12 +122,17 @@ const INITIAL_STATE = {
   species: normalizeSpeciesData(speciesData),
 };
 
+// Action creators
 export const loadJourney = (journeyName) => async (dispatch) => {
   const journeyModule = await import('../data/journeys/' + journeyName);
   dispatch({
     type: LOAD_JOURNEY,
     journey: journeyModule.default,
   });
+};
+
+export const accompanySprite = (id) => {
+  return {type: ACCOMPANY_SPRITE, id};
 };
 
 export const addItems = (id, count = 1) => {
@@ -264,6 +276,11 @@ export function game(state = INITIAL_STATE, action) {
     storyTokens, experience, inventory} = state;
 
   switch (action.type) {
+    case ACCOMPANY_SPRITE:
+      return {
+        ...state,
+        currentSpriteId: action.id,
+      };
     case ADD_ITEMS:
       return {
         ...state,
