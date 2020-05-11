@@ -1,3 +1,3 @@
 # Saylua
 
-This is a repo meant to turn into the final code for Saylua.
+This is a repo that was historically used to prototype an encounter system for Saylua.
